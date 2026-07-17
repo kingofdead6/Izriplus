@@ -1,0 +1,169 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600;700;800&family=Inter:wght@400;500;600;700;800&display=swap');
+@import "tailwindcss";
+
+/*
+  Brand theme tokens. These values are the single look-and-feel knob.
+  They are seeded here as defaults and overwritten at runtime from
+  src/store.config.js (see applyTheme() wired in main.jsx) so the config file
+  remains the single source of truth.
+
+  Meubles IZRI Plus — warm, crafted, furniture-showroom palette:
+  walnut brown (primary) / terracotta (secondary) / soft gold (accent)
+  on a warm ivory background instead of a dark UI.
+*/
+:root {
+  --primary: #6B4226;
+  --secondary: #C1683C;
+  --accent: #B8975A;
+  /* Space-separated RGB channels of the three brand colors, used for alpha
+     tints/shadows via rgb(var(--primary-rgb) / .8). Derived from the hex
+     theme at runtime by applyStoreConfig.js so config stays the single knob. */
+  --primary-rgb: 107 66 38;
+  --secondary-rgb: 193 104 60;
+  --accent-rgb: 184 151 90;
+
+  --bg: #F7F1E8;          /* warm ivory page background */
+  --surface: #FFFFFF;     /* card / panel surface */
+  --surface-soft: #FBF6EC;/* recessed panels, skeletons */
+  --ink: #2B2118;         /* primary text — warm near-black */
+  --muted: #7A6A5C;       /* secondary text — warm taupe */
+  --line: rgba(43,33,24,0.12);
+}
+
+/*
+  Tailwind v4 (CSS-first config): expose the brand variables as semantic color
+  tokens so utilities like `bg-primary`, `text-accent`, `border-secondary`
+  resolve to the brand theme. Components must use these instead of raw hex.
+*/
+@theme inline {
+  --color-primary: var(--primary);
+  --color-secondary: var(--secondary);
+  --color-accent: var(--accent);
+  --color-ink: var(--ink);
+  --color-muted: var(--muted);
+}
+
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: 'Inter', system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+::selection { background: var(--secondary); color: #fff; }
+
+* { scrollbar-width: thin; scrollbar-color: rgb(var(--primary-rgb) / .35) transparent; }
+::-webkit-scrollbar { width: 9px; height: 9px; }
+::-webkit-scrollbar-thumb { background: rgb(var(--primary-rgb) / .3); border-radius: 9px; }
+
+/* ── Keyframes ── */
+@keyframes floaty {
+  0%,100% { transform: translateY(0) rotate(-1deg); }
+  50%      { transform: translateY(-18px) rotate(1deg); }
+}
+@keyframes floatySlow {
+  0%,100% { transform: translateY(0); }
+  50%      { transform: translateY(-14px); }
+}
+@keyframes glowPulse {
+  0%,100% { opacity: .55; transform: scale(1); }
+  50%      { opacity: .9; transform: scale(1.06); }
+}
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(28px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+@keyframes scaleIn {
+  from { opacity: 0; transform: scale(.96); }
+  to   { opacity: 1; transform: scale(1); }
+}
+@keyframes shimmer {
+  0%   { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+@keyframes ringPulse {
+  0%  { box-shadow: 0 0 0 0 rgb(var(--accent-rgb) / .45); }
+  70% { box-shadow: 0 0 0 16px rgb(var(--accent-rgb) / 0); }
+  100%{ box-shadow: 0 0 0 0 rgb(var(--accent-rgb) / 0); }
+}
+@keyframes drawerIn {
+  from { transform: translateX(100%); }
+  to   { transform: translateX(0); }
+}
+
+/* ── Utility classes ── */
+.nv-fade-up  { animation: fadeUp .7s both; }
+.nv-fade-in  { animation: fadeIn .5s both; }
+.nv-scale-in { animation: scaleIn .6s both; }
+
+/* ── Tilt cards ── */
+.nv-tilt-card {
+  transform-style: preserve-3d;
+  transition: transform .25s cubic-bezier(.2,.9,.3,1), box-shadow .3s;
+}
+.nv-tilt-card:hover {
+  box-shadow: 0 28px 50px -22px rgb(var(--primary-rgb) / .35);
+}
+
+/* ── Magnetic button ── */
+.nv-mag-btn {
+  transition: transform .2s;
+}
+.nv-mag-btn:hover {
+  transform: scale(1.03);
+}
+
+/* ── Brand row (category hover-expand cards) ── */
+.nv-brand-row {
+  display: flex;
+  gap: 14px;
+  height: 330px;
+  overflow: visible;
+}
+.nv-brand-card {
+  flex: 1;
+  min-width: 64px;
+  transition: flex .6s cubic-bezier(.2,.9,.3,1), box-shadow .4s, border-color .4s;
+  isolation: isolate;
+}
+.nv-brand-card:hover {
+  flex: 2.6;
+  box-shadow: 0 26px 50px -20px rgb(var(--primary-rgb) / .35);
+  border-color: rgb(var(--secondary-rgb) / .4);
+}
+
+/* Category image — sits centered, rises slightly on hover */
+.nv-brand-logo {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: 0;
+  pointer-events: none;
+  transition: transform .6s cubic-bezier(.2,.9,.3,1), filter .4s;
+  filter: saturate(0.9);
+}
+.nv-brand-card:hover .nv-brand-logo {
+  transform: scale(1.06);
+  filter: saturate(1);
+}
+
+/* ── Mobile responsive ── */
+@media (max-width: 860px) {
+  .nv-hero-row { flex-direction: column !important; }
+  .nv-brand-row { height: auto !important; flex-wrap: wrap; }
+  .nv-brand-card { flex: unset !important; width: calc(50% - 7px) !important; height: 170px; }
+}
+@media (max-width: 640px) {
+  .nv-brand-card { width: 100% !important; }
+}
