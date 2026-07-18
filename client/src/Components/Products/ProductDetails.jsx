@@ -1,9 +1,10 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { API_BASE_URL } from "../../../api";
 import { toast } from "react-toastify";
 import { store } from "../../store.config.js";
+import { ProductCard } from "../Home/BestSellers";
 
 const ACCORDIONS = [
   { title: "Contenu du produit", body: "Le produit correspond aux photos présentées. L'emballage peut varier. Consultez la description pour le détail des éléments inclus." },
@@ -11,70 +12,32 @@ const ACCORDIONS = [
   { title: "Livraison", body: "Livraison partout en Algérie, paiement à la livraison. Le délai est confirmé avec vous par téléphone après la commande." },
 ];
 
-// Simple line-art armchair — shown when a product has no photo yet.
 const PlaceholderIcon = ({ size = 90 }) => (
   <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="var(--secondary)" strokeWidth="1.1" opacity="0.5">
-    <path d="M5 11V7a2 2 0 012-2h10a2 2 0 012 2v4" />
-    <path d="M4 11h16v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5z" />
-    <path d="M4 14a2 2 0 00-2 2v3h2M20 14a2 2 0 012 2v3h-2" />
-    <path d="M6 21v-2M18 21v-2" />
+    <path d="M5 11V7a2 2 0 012-2h10a2 2 0 012 2v4M4 11h16v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5zM6 21v-2M18 21v-2" />
   </svg>
 );
 
-function PriceBlock({ price }) {
-  return (
-    <div style={{ display: "flex", alignItems: "baseline", gap: 13, marginBottom: 22 }}>
-      <span style={{ fontFamily: "'Fraunces'", fontWeight: 700, fontSize: 38, background: "linear-gradient(120deg,var(--primary),var(--secondary))", WebkitBackgroundClip: "text", backgroundClip: "text", color: "transparent" }}>
-        {(price || 0).toLocaleString()} DA
-      </span>
-    </div>
-  );
-}
+const IconWhatsapp = () => (
+  <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+    <path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2 22l5.25-1.38a9.9 9.9 0 004.79 1.22h.01c5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.82 9.82 0 0012.04 2zm5.8 14.13c-.24.68-1.42 1.31-1.95 1.36-.5.05-1.13.07-1.82-.11-.42-.13-.96-.31-1.65-.61-2.9-1.25-4.79-4.17-4.94-4.36-.14-.19-1.18-1.57-1.18-2.99s.75-2.12 1.01-2.41c.26-.29.57-.36.76-.36.19 0 .38 0 .55.01.18.01.42-.07.65.5.24.58.82 2 .89 2.15.07.14.12.31.02.5-.09.19-.14.31-.28.48-.14.17-.29.37-.42.5-.14.14-.28.29-.12.57.16.28.72 1.18 1.54 1.91 1.06.95 1.95 1.24 2.23 1.38.28.14.44.12.6-.07.16-.19.69-.8.87-1.08.18-.28.36-.23.61-.14.25.09 1.6.75 1.87.89.28.14.46.21.53.33.07.12.07.68-.17 1.36z" />
+  </svg>
+);
 
 function StockBadge({ stock }) {
   if (stock === undefined || stock === null || stock > 4) return null;
   if (stock === 0) {
     return (
-      <div style={{ display: "inline-flex", alignItems: "center", gap: 7, padding: "7px 14px", borderRadius: 10, background: "rgba(220,38,38,.08)", border: "1px solid rgba(220,38,38,.3)", marginBottom: 16 }}>
-        <span style={{ width: 7, height: 7, borderRadius: "50%", background: "#dc2626", display: "block" }} />
-        <span style={{ fontFamily: "'Inter'", fontSize: 12, color: "#b91c1c", fontWeight: 600 }}>Rupture de stock</span>
+      <div className="inline-flex items-center gap-2 px-3.5 py-2 rounded-[4px] mb-4" style={{ background: "rgba(190,40,30,.07)", border: "1px solid rgba(190,40,30,.28)" }}>
+        <span className="w-[7px] h-[7px] rounded-full" style={{ background: "#b91c1c" }} />
+        <span className="text-[12.5px] font-semibold" style={{ color: "#b91c1c" }}>Rupture de stock</span>
       </div>
     );
   }
   return (
-    <div style={{ display: "inline-flex", alignItems: "center", gap: 7, padding: "7px 14px", borderRadius: 10, background: "rgb(var(--accent-rgb) / .12)", border: "1px solid rgb(var(--accent-rgb) / .4)", marginBottom: 16 }}>
-      <span style={{ width: 7, height: 7, borderRadius: "50%", background: "var(--accent)", display: "block", animation: "ringPulse 2s infinite" }} />
-      <span style={{ fontFamily: "'Inter'", fontSize: 12, color: "var(--primary)", fontWeight: 600 }}>Plus que {stock} en stock !</span>
-    </div>
-  );
-}
-
-function RelatedCard({ item, onClick }) {
-  const cardRef = useRef(null);
-  const onMouseMove = (e) => {
-    const card = cardRef.current;
-    if (!card) return;
-    const rect = card.getBoundingClientRect();
-    card.style.transform = `perspective(800px) rotateX(${((e.clientY - rect.top) / rect.height - 0.5) * -6}deg) rotateY(${((e.clientX - rect.left) / rect.width - 0.5) * 6}deg)`;
-  };
-  const onMouseLeave = () => { if (cardRef.current) cardRef.current.style.transform = "perspective(800px) rotateX(0) rotateY(0)"; };
-
-  return (
-    <div ref={cardRef} onClick={onClick} onMouseMove={onMouseMove} onMouseLeave={onMouseLeave}
-      style={{ position: "relative", borderRadius: 20, overflow: "hidden", cursor: "pointer", border: "1px solid var(--line)", background: "var(--surface)", transition: "box-shadow .3s", transformStyle: "preserve-3d" }}
-      onMouseEnter={e => e.currentTarget.style.boxShadow = "0 26px 48px -24px rgb(var(--primary-rgb) / .3)"}
-    >
-      <div style={{ height: 200, display: "flex", alignItems: "center", justifyContent: "center", background: "var(--surface-soft)" }}>
-        {item.images?.[0]?.url
-          ? <img src={item.images[0].url} alt={item.name} style={{ width: "100%", height: "100%", objectFit: "cover" }} />
-          : <PlaceholderIcon size={56} />
-        }
-      </div>
-      <div style={{ position: "relative", zIndex: 4, padding: 16 }}>
-        <p style={{ fontFamily: "'Inter'", fontSize: 11, color: "var(--muted)", margin: "0 0 4px" }}>{item.category?.name || ""}</p>
-        <h3 style={{ fontFamily: "'Fraunces'", fontWeight: 700, fontSize: 16, margin: "0 0 4px", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis", color: "var(--ink)" }}>{item.name}</h3>
-        <p style={{ fontFamily: "'Fraunces'", fontWeight: 700, fontSize: 15, color: "var(--secondary)", margin: 0 }}>{(item.price || 0).toLocaleString()} DA</p>
-      </div>
+    <div className="inline-flex items-center gap-2 px-3.5 py-2 rounded-[4px] mb-4" style={{ background: "rgb(var(--accent-rgb) / .12)", border: "1px solid rgb(var(--accent-rgb) / .4)" }}>
+      <span className="w-[7px] h-[7px] rounded-full" style={{ background: "var(--accent)" }} />
+      <span className="text-[12.5px] font-semibold" style={{ color: "var(--primary)" }}>Plus que {stock} en stock</span>
     </div>
   );
 }
@@ -89,11 +52,11 @@ export default function ProductDetailsPage() {
   const [related, setRelated] = useState([]);
   const [openAccordion, setOpenAccordion] = useState(null);
   const [added, setAdded] = useState(false);
-  const cardRef = useRef(null);
 
   useEffect(() => {
     setLoading(true);
     setSelectedImg(0);
+    window.scrollTo(0, 0);
     axios.get(`${API_BASE_URL}/products/${id}`)
       .then(r => {
         setItem(r.data);
@@ -122,22 +85,14 @@ export default function ProductDetailsPage() {
     setTimeout(() => setAdded(false), 2000);
   };
 
-  const onTilt = (e) => {
-    const card = cardRef.current;
-    if (!card) return;
-    const rect = card.getBoundingClientRect();
-    card.style.transform = `rotateX(${((e.clientY - rect.top) / rect.height - 0.5) * -5}deg) rotateY(${((e.clientX - rect.left) / rect.width - 0.5) * 5}deg)`;
-  };
-  const onTiltLeave = () => { if (cardRef.current) cardRef.current.style.transform = "rotateX(0) rotateY(0)"; };
-
   if (loading) return (
-    <div style={{ minHeight: "100vh", display: "flex", alignItems: "center", justifyContent: "center" }}>
-      <p style={{ fontFamily: "'Fraunces'", fontSize: 22, color: "var(--secondary)", animation: "glowPulse 1.5s infinite" }}>Chargement du produit…</p>
+    <div className="min-h-[60vh] flex items-center justify-center px-6">
+      <p style={{ fontFamily: "'Fraunces', serif", fontSize: 22, color: "var(--muted)" }}>Chargement du produit…</p>
     </div>
   );
   if (!item) return (
-    <div style={{ minHeight: "100vh", display: "flex", alignItems: "center", justifyContent: "center" }}>
-      <p style={{ fontFamily: "'Fraunces'", fontSize: 22, color: "var(--muted)" }}>Meuble introuvable.</p>
+    <div className="min-h-[60vh] flex items-center justify-center px-6">
+      <p style={{ fontFamily: "'Fraunces', serif", fontSize: 22, color: "var(--muted)" }}>Meuble introuvable.</p>
     </div>
   );
 
@@ -148,116 +103,139 @@ export default function ProductDetailsPage() {
   ].filter(Boolean);
 
   return (
-    <div style={{ animation: "fadeIn .5s", maxWidth: 1280, margin: "0 auto", padding: "34px 26px 80px" }}>
-      <button onClick={() => navigate("/products")}
-        style={{ fontFamily: "'Inter'", fontWeight: 600, fontSize: 13, color: "var(--muted)", background: "none", border: "none", cursor: "pointer", marginBottom: 24, display: "inline-flex", alignItems: "center", gap: 7, transition: "color .2s" }}
-        onMouseEnter={e => e.currentTarget.style.color = "var(--ink)"}
-        onMouseLeave={e => e.currentTarget.style.color = "var(--muted)"}
-      >← Retour aux meubles</button>
+    <main style={{ minHeight: "100vh", position: "relative", zIndex: 2 }}>
+      <div className="max-w-[1240px] mx-auto px-5 sm:px-8 pt-8 pb-20 md:pt-10 md:pb-28" style={{ animation: "fadeIn .5s" }}>
+        <button onClick={() => navigate("/products")} className="nv-link mb-8 md:mb-10">
+          <span className="nv-link__arrow" style={{ transform: "scaleX(-1)" }}>→</span> Retour aux meubles
+        </button>
 
-      <div style={{ display: "flex", gap: 46, alignItems: "flex-start", flexWrap: "wrap" }}>
-        {/* Gallery */}
-        <div style={{ flex: "0 0 500px", minWidth: 300, maxWidth: 560, position: "sticky", top: 96, animation: "fadeUp .6s both" }}>
-          <div ref={cardRef} onMouseMove={onTilt} onMouseLeave={onTiltLeave}
-            style={{ position: "relative", borderRadius: 26, overflow: "hidden", border: "1px solid var(--line)", background: "var(--surface-soft)", height: 520, display: "flex", alignItems: "center", justifyContent: "center", transformStyle: "preserve-3d", transition: "transform .25s" }}
-          >
-            {images.length > 0 ? (
-              <img src={images[selectedImg]?.url} alt={item.name}
-                style={{ position: "relative", zIndex: 2, width: "100%", height: "100%", objectFit: "cover", transition: "opacity .25s" }}
-              />
-            ) : (
-              <PlaceholderIcon size={140} />
-            )}
-          </div>
-          {images.length > 1 && (
-            <div style={{ display: "flex", gap: 10, marginTop: 14, justifyContent: "center", flexWrap: "wrap" }}>
-              {images.map((img, i) => (
-                <button key={i} onClick={() => setSelectedImg(i)}
-                  style={{ width: 72, height: 72, borderRadius: 14, cursor: "pointer", overflow: "hidden", border: `2px solid ${i === selectedImg ? "var(--secondary)" : "var(--line)"}`, transition: "all .25s", padding: 0, background: "var(--surface)" }}
-                >
-                  <img src={img.url} alt="" style={{ width: "100%", height: "100%", objectFit: "cover" }} />
-                </button>
-              ))}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-14 items-start">
+          {/* Gallery */}
+          <div className="lg:sticky lg:top-24 self-start w-full" style={{ animation: "fadeUp .6s both" }}>
+            <div className="nv-media relative w-full aspect-[4/5] sm:aspect-square lg:aspect-[4/5] rounded-[6px] overflow-hidden border border-[var(--line)] bg-[var(--surface-soft)] flex items-center justify-center">
+              {images.length > 0 ? (
+                <img src={images[selectedImg]?.url} alt={item.name} className="w-full h-full object-cover" />
+              ) : (
+                <PlaceholderIcon size={120} />
+              )}
             </div>
-          )}
-        </div>
-
-        {/* Info */}
-        <div style={{ flex: 1, minWidth: 300, animation: "fadeUp .6s both .08s" }}>
-          <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 14, flexWrap: "wrap" }}>
-            {item.category?.name && (
-              <span style={{ fontFamily: "'Inter'", fontWeight: 600, fontSize: 12, padding: "5px 11px", borderRadius: 8, background: "rgb(var(--secondary-rgb) / .1)", border: "1px solid rgb(var(--secondary-rgb) / .3)", color: "var(--primary)" }}>{item.category.name}</span>
-            )}
-            {(item.stock === undefined || item.stock > 4) && (
-              <span style={{ fontFamily: "'Inter'", fontSize: 12, color: "#3f7d4a", display: "inline-flex", alignItems: "center", gap: 6, fontWeight: 600 }}>
-                <span style={{ width: 7, height: 7, borderRadius: "50%", background: "#4ba05a", animation: "ringPulse 2s infinite", display: "block" }} />
-                En stock
-              </span>
+            {images.length > 1 && (
+              <div className="flex gap-2.5 sm:gap-3 mt-3.5 overflow-x-auto pb-1 -mx-1 px-1" style={{ scrollbarWidth: "none" }}>
+                {images.map((img, i) => (
+                  <button
+                    key={i}
+                    onClick={() => setSelectedImg(i)}
+                    className="shrink-0 w-16 h-16 sm:w-[74px] sm:h-[74px] rounded-[5px] overflow-hidden p-0 cursor-pointer transition-all"
+                    style={{ border: `2px solid ${i === selectedImg ? "var(--ink)" : "var(--line)"}`, background: "var(--surface)" }}
+                  >
+                    <img src={img.url} alt="" className="w-full h-full object-cover" />
+                  </button>
+                ))}
+              </div>
             )}
           </div>
 
-          <h1 style={{ fontFamily: "'Fraunces'", fontWeight: 700, fontSize: "clamp(28px,4vw,46px)", letterSpacing: "-.01em", lineHeight: 1.1, margin: "0 0 12px", color: "var(--ink)" }}>{item.name}</h1>
+          {/* Info */}
+          <div className="w-full" style={{ animation: "fadeUp .6s both .08s" }}>
+            <div className="flex items-center gap-3 mb-4 flex-wrap">
+              {item.category?.name && (
+                <span className="text-[11px] font-semibold uppercase tracking-[.12em] px-3 py-1.5 rounded-full" style={{ background: "rgb(var(--secondary-rgb) / .1)", border: "1px solid rgb(var(--secondary-rgb) / .3)", color: "var(--primary)" }}>
+                  {item.category.name}
+                </span>
+              )}
+              {(item.stock === undefined || item.stock > 4) && (
+                <span className="text-[12.5px] font-semibold inline-flex items-center gap-2" style={{ color: "#3f7d4a" }}>
+                  <span className="w-[7px] h-[7px] rounded-full" style={{ background: "#4ba05a" }} />
+                  En stock
+                </span>
+              )}
+            </div>
 
-          {item.description && (
-            <p style={{ fontSize: 16.5, lineHeight: 1.6, color: "var(--muted)", margin: "0 0 18px" }}>{item.description}</p>
-          )}
+            <h1 className="text-ink m-0 mb-4" style={{ fontFamily: "'Fraunces', serif", fontWeight: 400, fontSize: "clamp(30px,5vw,50px)", letterSpacing: "-0.02em", lineHeight: 1.05 }}>
+              {item.name}
+            </h1>
 
-          {specs.length > 0 && (
-            <div style={{ display: "flex", flexWrap: "wrap", gap: 10, marginBottom: 18 }}>
-              {specs.map(s => (
-                <div key={s.label} style={{ padding: "9px 14px", borderRadius: 11, background: "var(--surface-soft)", border: "1px solid var(--line)" }}>
-                  <span style={{ fontFamily: "'Inter'", fontSize: 11, color: "var(--muted)", display: "block", marginBottom: 2 }}>{s.label}</span>
-                  <span style={{ fontFamily: "'Inter'", fontSize: 13.5, color: "var(--ink)", fontWeight: 600 }}>{s.value}</span>
+            <p className="m-0 mb-6 text-ink" style={{ fontFamily: "'Fraunces', serif", fontWeight: 500, fontSize: 28 }}>
+              {(item.price || 0).toLocaleString()} DA
+            </p>
+
+            {item.description && (
+              <p className="text-[15.5px] sm:text-[16px] leading-[1.7] text-[var(--muted)] m-0 mb-7">{item.description}</p>
+            )}
+
+            {specs.length > 0 && (
+              <div className="flex flex-wrap gap-2.5 mb-7">
+                {specs.map(s => (
+                  <div key={s.label} className="px-3.5 py-2.5 rounded-[5px]" style={{ background: "var(--surface-soft)", border: "1px solid var(--line)" }}>
+                    <span className="block text-[10.5px] uppercase tracking-[.1em] text-[var(--muted)] mb-1">{s.label}</span>
+                    <span className="text-[13.5px] text-ink font-semibold">{s.value}</span>
+                  </div>
+                ))}
+              </div>
+            )}
+
+            <StockBadge stock={item.stock} />
+
+            <div className="flex flex-col sm:flex-row gap-3 mb-4">
+              <button
+                onClick={addToCart}
+                disabled={item.stock === 0}
+                className="nv-btn flex-1"
+                style={{
+                  background: added ? "#3f7d4a" : item.stock === 0 ? "var(--surface-soft)" : "var(--ink)",
+                  color: item.stock === 0 ? "var(--muted)" : "var(--bg)",
+                  cursor: item.stock === 0 ? "not-allowed" : "pointer",
+                }}
+              >
+                {item.stock === 0 ? "Rupture de stock" : added ? "✓ Ajouté au panier" : "Ajouter au panier"}
+              </button>
+              <a
+                href={`https://wa.me/${store.contact.whatsapp}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="nv-btn no-underline"
+                style={{ background: "#25D366", color: "#0b3d1e" }}
+              >
+                <IconWhatsapp /> WhatsApp
+              </a>
+            </div>
+            <p className="text-[12.5px] text-[var(--muted)] m-0 mb-9">
+              Livraison partout en Algérie · Paiement à la livraison
+            </p>
+
+            <div className="flex flex-col">
+              {ACCORDIONS.map((acc, i) => (
+                <div key={i} className="border-t border-[var(--line)] last:border-b">
+                  <button
+                    onClick={() => setOpenAccordion(openAccordion === i ? null : i)}
+                    className="w-full flex items-center justify-between gap-4 py-4 bg-transparent border-none cursor-pointer text-left"
+                    style={{ color: "var(--ink)", fontFamily: "var(--font-body)", fontWeight: 600, fontSize: 15 }}
+                  >
+                    {acc.title}
+                    <span className="text-[20px] leading-none shrink-0 transition-transform duration-300" style={{ color: "var(--secondary)", transform: openAccordion === i ? "rotate(45deg)" : "rotate(0)" }}>+</span>
+                  </button>
+                  {openAccordion === i && (
+                    <div className="pb-4 text-[var(--muted)] text-[14.5px] leading-[1.7]" style={{ animation: "fadeUp .3s" }}>{acc.body}</div>
+                  )}
                 </div>
               ))}
             </div>
-          )}
-
-          <StockBadge stock={item.stock} />
-          <PriceBlock price={item.price} />
-
-          <div style={{ display: "flex", gap: 12, marginBottom: 14, flexWrap: "wrap" }}>
-            <button onClick={addToCart} disabled={item.stock === 0} className="nv-mag-btn"
-              style={{ flex: 1, minWidth: 180, padding: 17, border: "none", borderRadius: 15, background: added ? "linear-gradient(135deg,#3f7d4a,#2d5c37)" : item.stock === 0 ? "var(--surface-soft)" : "linear-gradient(135deg,var(--secondary),var(--primary))", color: item.stock === 0 ? "var(--muted)" : "#fff", fontFamily: "'Inter'", fontWeight: 700, fontSize: 16.5, cursor: item.stock === 0 ? "not-allowed" : "pointer", boxShadow: item.stock === 0 ? "none" : "0 16px 36px -16px rgb(var(--primary-rgb) / .5)", transition: "background .4s" }}
-            >
-              {item.stock === 0 ? "Rupture de stock" : added ? "✓ Ajouté !" : "Ajouter au panier"}
-            </button>
-            <a href={`https://wa.me/${store.contact.whatsapp}`} target="_blank" rel="noopener noreferrer" className="nv-mag-btn"
-              style={{ display: "inline-flex", alignItems: "center", justifyContent: "center", gap: 10, padding: "17px 24px", border: "1px solid rgba(52,163,86,.4)", borderRadius: 15, background: "rgba(52,163,86,.08)", color: "#2d6b3a", fontFamily: "'Inter'", fontWeight: 700, fontSize: 16, cursor: "pointer", textDecoration: "none" }}
-            >
-              WhatsApp
-            </a>
-          </div>
-          <p style={{ fontFamily: "'Inter'", fontSize: 12.5, color: "var(--muted)", margin: "0 0 26px" }}>
-            Livraison partout en Algérie · Paiement à la livraison
-          </p>
-
-          <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
-            {ACCORDIONS.map((acc, i) => (
-              <div key={i} style={{ border: "1px solid var(--line)", borderRadius: 16, overflow: "hidden", background: "var(--surface)" }}>
-                <button onClick={() => setOpenAccordion(openAccordion === i ? null : i)}
-                  style={{ width: "100%", display: "flex", alignItems: "center", justifyContent: "space-between", padding: "16px 18px", background: "none", border: "none", cursor: "pointer", color: "var(--ink)", fontFamily: "'Inter'", fontWeight: 600, fontSize: 15.5, textAlign: "left" }}
-                >
-                  {acc.title}
-                  <span style={{ fontSize: 18, color: "var(--secondary)", transition: "transform .3s", transform: openAccordion === i ? "rotate(45deg)" : "rotate(0)" }}>+</span>
-                </button>
-                {openAccordion === i && (
-                  <div style={{ padding: "0 18px 18px", color: "var(--muted)", fontSize: 14.5, lineHeight: 1.6, animation: "fadeUp .3s" }}>{acc.body}</div>
-                )}
-              </div>
-            ))}
           </div>
         </div>
-      </div>
 
-      {related.length > 0 && (
-        <section style={{ marginTop: 64 }}>
-          <h2 style={{ fontFamily: "'Fraunces'", fontWeight: 700, fontSize: 27, letterSpacing: "-.01em", margin: "0 0 22px", color: "var(--ink)" }}>Vous aimerez aussi</h2>
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill,minmax(220px,1fr))", gap: 18 }}>
-            {related.map(a => <RelatedCard key={a._id} item={a} onClick={() => navigate(`/products/${a._id}`)} />)}
-          </div>
-        </section>
-      )}
-    </div>
+        {related.length > 0 && (
+          <section className="mt-20 md:mt-28 pt-16 border-t border-[var(--line)]">
+            <h2 className="text-ink m-0 mb-9" style={{ fontFamily: "'Fraunces', serif", fontWeight: 400, fontSize: "clamp(26px,3.4vw,40px)", letterSpacing: "-0.02em" }}>
+              Vous aimerez aussi
+            </h2>
+            <div className="grid grid-cols-2 lg:grid-cols-4 gap-5">
+              {related.map(a => (
+                <ProductCard key={a._id} product={a} onClick={() => navigate(`/products/${a._id}`)} />
+              ))}
+            </div>
+          </section>
+        )}
+      </div>
+    </main>
   );
 }
