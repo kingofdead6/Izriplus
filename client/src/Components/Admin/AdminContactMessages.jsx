@@ -12,11 +12,11 @@ const getToken = () => localStorage.getItem("token") || sessionStorage.getItem("
 const S = {
   page: { minHeight: "100vh", padding: "56px 24px 80px" },
   inner: { maxWidth: 1280, margin: "0 auto" },
-  h1: { fontFamily: "'Playfair Display'", fontWeight: 700, fontSize: "clamp(28px,4vw,52px)", color: "var(--ink)", margin: "0 0 36px", letterSpacing: "-.02em" },
+  h1: { fontFamily: "'Fraunces'", fontWeight: 700, fontSize: "clamp(28px,4vw,52px)", color: "var(--ink)", margin: "0 0 36px", letterSpacing: "-.02em" },
   grid: { display: "grid", gridTemplateColumns: "repeat(auto-fill,minmax(340px,1fr))", gap: 20 },
   card: { background: "var(--surface)", border: "1px solid var(--line)", borderRadius: 20, overflow: "hidden", display: "flex", flexDirection: "column", transition: "border-color .2s, box-shadow .2s" },
   body: { padding: "20px 20px 18px", display: "flex", flexDirection: "column", gap: 12, flex: 1 },
-  subject: { fontFamily: "'Playfair Display'", fontWeight: 700, fontSize: 17, color: "var(--ink)", margin: 0, lineHeight: 1.3 },
+  subject: { fontFamily: "'Fraunces'", fontWeight: 700, fontSize: 17, color: "var(--ink)", margin: 0, lineHeight: 1.3 },
   preview: { fontSize: 13, color: "var(--muted)", lineHeight: 1.55, margin: 0, display: "-webkit-box", WebkitLineClamp: 3, WebkitBoxOrient: "vertical", overflow: "hidden" },
   meta: { display: "flex", flexDirection: "column", gap: 5, paddingTop: 12, borderTop: "1px solid var(--line)" },
   metaRow: { display: "flex", alignItems: "center", gap: 7, fontSize: 13, color: "var(--muted)" },
@@ -24,11 +24,11 @@ const S = {
   actions: { display: "flex", gap: 8, marginTop: 4 },
   viewBtn: { flex: 1, display: "flex", alignItems: "center", justifyContent: "center", gap: 6, padding: "10px", background: "rgb(var(--accent-rgb) / .1)", border: "1px solid rgb(var(--accent-rgb) / .25)", color: "var(--accent)", borderRadius: 10, fontSize: 13, fontWeight: 600, cursor: "pointer" },
   delBtn: { flex: 1, display: "flex", alignItems: "center", justifyContent: "center", gap: 6, padding: "10px", background: "rgba(239,68,68,.1)", border: "1px solid rgba(239,68,68,.3)", color: "#b91c1c", borderRadius: 10, fontSize: 13, fontWeight: 600, cursor: "pointer" },
-  empty: { textAlign: "center", color: "var(--muted)", fontSize: 20, paddingTop: 80, fontFamily: "'Playfair Display'" },
+  empty: { textAlign: "center", color: "var(--muted)", fontSize: 20, paddingTop: 80, fontFamily: "'Fraunces'" },
   overlay: { position: "fixed", inset: 0, background: "rgba(43,33,24,.45)", zIndex: 50, display: "flex", alignItems: "center", justifyContent: "center", padding: 16 },
   modal: { background: "var(--surface)", border: "1px solid var(--line)", borderRadius: 24, width: "100%", maxWidth: 560, maxHeight: "85vh", display: "flex", flexDirection: "column", boxShadow: "0 24px 80px rgba(43,33,24,.22)" },
   modalHeader: { padding: "22px 26px 18px", display: "flex", justifyContent: "space-between", alignItems: "center", borderBottom: "1px solid var(--line)", flexShrink: 0 },
-  modalTitle: { fontFamily: "'Playfair Display'", fontWeight: 700, fontSize: 20, color: "var(--ink)", margin: 0 },
+  modalTitle: { fontFamily: "'Fraunces'", fontWeight: 700, fontSize: 20, color: "var(--ink)", margin: 0 },
   closeBtn: { background: "var(--surface-soft)", border: "1px solid var(--line)", color: "var(--muted)", borderRadius: 10, padding: 6, cursor: "pointer", display: "flex" },
   modalBody: { overflowY: "auto", padding: "22px 26px", display: "flex", flexDirection: "column", gap: 18 },
   sectionLabel: { fontSize: 11, color: "var(--muted)", fontFamily: "'Inter'", fontWeight: 600, textTransform: "uppercase", letterSpacing: ".08em", marginBottom: 6 },
@@ -66,7 +66,7 @@ export default function AdminContactMessages() {
 
   if (loading) return (
     <div style={{ ...S.page, display: "flex", alignItems: "center", justifyContent: "center" }}>
-      <p style={{ color: "var(--muted)", fontSize: 18, fontFamily: "'Playfair Display'" }}>Loading...</p>
+      <p style={{ color: "var(--muted)", fontSize: 18, fontFamily: "'Fraunces'" }}>Loading...</p>
     </div>
   );
 

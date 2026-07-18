@@ -118,7 +118,7 @@ export default function AdminOrders() {
       <div style={{ maxWidth: 1280, margin: "0 auto" }}>
         {/* Header */}
         <div style={{ textAlign: "center", marginBottom: 40 }}>
-          <h1 style={{ fontFamily: "'Playfair Display'", fontWeight: 700, fontSize: "clamp(32px,5vw,60px)", color: "var(--ink)", margin: "0 0 8px" }}>
+          <h1 style={{ fontFamily: "'Fraunces'", fontWeight: 700, fontSize: "clamp(32px,5vw,60px)", color: "var(--ink)", margin: "0 0 8px" }}>
             Orders
           </h1>
           <p style={{ color: "var(--muted)", fontSize: 16, margin: 0 }}>Track and manage all orders in real time</p>
@@ -172,7 +172,7 @@ export default function AdminOrders() {
                         <p style={{ fontFamily: "'Inter'", fontSize: 11, color: "var(--muted)", margin: "0 0 4px" }}>
                           #{order._id.slice(-6).toUpperCase()}
                         </p>
-                        <h3 style={{ fontFamily: "'Playfair Display'", fontWeight: 700, fontSize: 18, color: "var(--ink)", margin: "0 0 4px" }}>
+                        <h3 style={{ fontFamily: "'Fraunces'", fontWeight: 700, fontSize: 18, color: "var(--ink)", margin: "0 0 4px" }}>
                           {order.customerName}
                         </h3>
                         <p style={{ color: "var(--muted)", fontSize: 14, margin: 0 }}>{order.phone}</p>
@@ -238,7 +238,7 @@ export default function AdminOrders() {
             >
               <div style={{ padding: 32 }}>
                 <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 28 }}>
-                  <h2 style={{ fontFamily: "'Playfair Display'", fontWeight: 700, fontSize: 26, color: "var(--ink)", margin: 0 }}>
+                  <h2 style={{ fontFamily: "'Fraunces'", fontWeight: 700, fontSize: 26, color: "var(--ink)", margin: 0 }}>
                     Order #{selectedOrder._id.slice(-6).toUpperCase()}
                   </h2>
                   <button onClick={() => setSelectedOrder(null)} style={{ background: "var(--surface-soft)", border: "1px solid var(--line)", borderRadius: 10, padding: 8, cursor: "pointer", color: "var(--muted)" }}>
@@ -248,7 +248,7 @@ export default function AdminOrders() {
 
                 <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(240px,1fr))", gap: 24, marginBottom: 28 }}>
                   <div style={{ background: "var(--surface-soft)", border: "1px solid var(--line)", borderRadius: 16, padding: 20 }}>
-                    <h3 style={{ fontFamily: "'Playfair Display'", fontWeight: 700, fontSize: 16, color: "var(--secondary)", margin: "0 0 14px", textTransform: "uppercase", letterSpacing: ".04em" }}>Customer</h3>
+                    <h3 style={{ fontFamily: "'Fraunces'", fontWeight: 700, fontSize: 16, color: "var(--secondary)", margin: "0 0 14px", textTransform: "uppercase", letterSpacing: ".04em" }}>Customer</h3>
                     <div style={{ display: "flex", flexDirection: "column", gap: 8, fontSize: 14, color: "var(--muted)" }}>
                       <p style={{ margin: 0 }}><strong style={{ color: "var(--ink)" }}>Name:</strong> {selectedOrder.customerName}</p>
                       <p style={{ margin: 0 }}><strong style={{ color: "var(--ink)" }}>Phone:</strong> {selectedOrder.phone}</p>
@@ -261,7 +261,7 @@ export default function AdminOrders() {
                   </div>
 
                   <div style={{ background: "var(--surface-soft)", border: "1px solid var(--line)", borderRadius: 16, padding: 20 }}>
-                    <h3 style={{ fontFamily: "'Playfair Display'", fontWeight: 700, fontSize: 16, color: "var(--secondary)", margin: "0 0 14px", textTransform: "uppercase", letterSpacing: ".04em" }}>Pricing</h3>
+                    <h3 style={{ fontFamily: "'Fraunces'", fontWeight: 700, fontSize: 16, color: "var(--secondary)", margin: "0 0 14px", textTransform: "uppercase", letterSpacing: ".04em" }}>Pricing</h3>
                     <div style={{ display: "flex", flexDirection: "column", gap: 8, fontSize: 14, color: "var(--muted)" }}>
                       <span style={{ ...statusBadge(selectedOrder.status), display: "inline-block", marginBottom: 8 }}>{STATUS_LABELS[selectedOrder.status]}</span>
                       <p style={{ margin: 0 }}><strong style={{ color: "var(--ink)" }}>Subtotal:</strong> {selectedOrder.subtotal} DA</p>
@@ -272,15 +272,15 @@ export default function AdminOrders() {
                 </div>
 
                 {/* Products */}
-                <h3 style={{ fontFamily: "'Playfair Display'", fontWeight: 700, fontSize: 18, color: "var(--ink)", margin: "0 0 16px" }}>Items</h3>
+                <h3 style={{ fontFamily: "'Fraunces'", fontWeight: 700, fontSize: 18, color: "var(--ink)", margin: "0 0 16px" }}>Items</h3>
                 <div style={{ display: "flex", flexDirection: "column", gap: 14, marginBottom: 28 }}>
                   {selectedOrder.items.map((item, idx) => (
                     <div key={idx} style={{ display: "flex", gap: 16, background: "var(--surface-soft)", border: "1px solid var(--line)", borderRadius: 16, padding: 16, alignItems: "center" }}>
                       <img src={item.image || "/placeholder.jpg"} alt={item.name} style={{ width: 80, height: 80, objectFit: "cover", borderRadius: 12, flexShrink: 0 }} />
                       <div style={{ flex: 1 }}>
-                        <h4 style={{ fontFamily: "'Playfair Display'", fontWeight: 600, fontSize: 16, color: "var(--ink)", margin: "0 0 6px" }}>{item.name}</h4>
+                        <h4 style={{ fontFamily: "'Fraunces'", fontWeight: 600, fontSize: 16, color: "var(--ink)", margin: "0 0 6px" }}>{item.name}</h4>
                         <p style={{ color: "var(--muted)", fontSize: 13, margin: "0 0 4px" }}>Price: {item.price} DA · Qty: {item.quantity}</p>
-                        <p style={{ fontFamily: "'Playfair Display'", fontWeight: 700, fontSize: 17, color: "var(--secondary)", margin: 0 }}>{item.price * item.quantity} DA</p>
+                        <p style={{ fontFamily: "'Fraunces'", fontWeight: 700, fontSize: 17, color: "var(--secondary)", margin: 0 }}>{item.price * item.quantity} DA</p>
                       </div>
                     </div>
                   ))}

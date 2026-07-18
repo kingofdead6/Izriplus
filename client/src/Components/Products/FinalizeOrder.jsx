@@ -128,7 +128,7 @@ export default function FinalizeOrder() {
       <div style={{ minHeight: "70vh", display: "flex", alignItems: "center", justifyContent: "center", padding: "20px" }}>
         <div style={{ background: "var(--surface)", border: "1px solid rgb(var(--secondary-rgb) / .3)", borderRadius: 24, padding: "56px 44px", maxWidth: 420, textAlign: "center", animation: "scaleIn .5s both" }}>
           <CheckCircle style={{ width: 72, height: 72, color: "var(--secondary)", margin: "0 auto 22px" }} />
-          <h1 style={{ fontFamily: "'Playfair Display'", fontWeight: 700, fontSize: 32, color: "var(--ink)", margin: "0 0 12px" }}>
+          <h1 style={{ fontFamily: "'Fraunces'", fontWeight: 700, fontSize: 32, color: "var(--ink)", margin: "0 0 12px" }}>
             Commande confirmée !
           </h1>
           <p style={{ fontSize: 15.5, color: "var(--muted)", margin: 0, fontFamily: "'Inter'", lineHeight: 1.6 }}>
@@ -151,7 +151,7 @@ export default function FinalizeOrder() {
           Retour au panier
         </Link>
 
-        <h1 style={{ fontFamily: "'Playfair Display'", fontWeight: 700, fontSize: "clamp(28px,5vw,46px)", color: "var(--ink)", margin: "0 0 36px", letterSpacing: "-.01em" }}>
+        <h1 style={{ fontFamily: "'Fraunces'", fontWeight: 700, fontSize: "clamp(28px,5vw,46px)", color: "var(--ink)", margin: "0 0 36px", letterSpacing: "-.01em" }}>
           Finaliser la commande
         </h1>
 
@@ -159,7 +159,7 @@ export default function FinalizeOrder() {
 
           {/* Form Card */}
           <div style={{ gridColumn: "span 2", background: "var(--surface)", border: "1px solid var(--line)", borderRadius: 20, padding: 34 }}>
-            <h2 style={{ fontFamily: "'Playfair Display'", fontWeight: 700, fontSize: 20, color: "var(--ink)", margin: "0 0 26px" }}>
+            <h2 style={{ fontFamily: "'Fraunces'", fontWeight: 700, fontSize: 20, color: "var(--ink)", margin: "0 0 26px" }}>
               Vos informations
             </h2>
 
@@ -317,7 +317,7 @@ export default function FinalizeOrder() {
 
           {/* Order Summary Card */}
           <div style={{ background: "var(--surface)", border: "1px solid var(--line)", borderRadius: 20, padding: 26, position: "sticky", top: 96 }}>
-            <h2 style={{ fontFamily: "'Playfair Display'", fontWeight: 700, fontSize: 20, color: "var(--ink)", margin: "0 0 20px" }}>
+            <h2 style={{ fontFamily: "'Fraunces'", fontWeight: 700, fontSize: 20, color: "var(--ink)", margin: "0 0 20px" }}>
               Récapitulatif
             </h2>
 
@@ -340,7 +340,7 @@ export default function FinalizeOrder() {
                     }
                   </div>
                   <div style={{ flex: 1, minWidth: 0 }}>
-                    <p style={{ fontFamily: "'Playfair Display'", fontWeight: 700, fontSize: 14.5, color: "var(--ink)", margin: "0 0 4px", lineHeight: 1.3 }}>
+                    <p style={{ fontFamily: "'Fraunces'", fontWeight: 700, fontSize: 14.5, color: "var(--ink)", margin: "0 0 4px", lineHeight: 1.3 }}>
                       {item.name}
                     </p>
                     <p style={{ fontSize: 12.5, color: "var(--muted)", margin: 0, fontFamily: "'Inter'" }}>Qté : {item.quantity}</p>
@@ -371,7 +371,7 @@ export default function FinalizeOrder() {
 
               <div style={{ display: "flex", justifyContent: "space-between", paddingTop: 16, borderTop: "1px solid var(--line)", fontSize: 19, fontWeight: 700 }}>
                 <span style={{ color: "var(--ink)" }}>Total</span>
-                <span style={{ color: "var(--secondary)", fontFamily: "'Playfair Display'" }}>{totalWithDelivery.toLocaleString()} DA</span>
+                <span style={{ color: "var(--secondary)", fontFamily: "'Fraunces'" }}>{totalWithDelivery.toLocaleString()} DA</span>
               </div>
             </div>
           </div>

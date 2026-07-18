@@ -78,7 +78,7 @@ export default function AdminDashboard() {
             initial={{ opacity: 0, y: -40 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.9, ease: "easeOut" }}
-            style={{ fontFamily: "'Playfair Display'", fontWeight: 700, fontSize: "clamp(36px,6vw,72px)", letterSpacing: "-.03em", color: "var(--ink)", margin: 0 }}
+            style={{ fontFamily: "'Fraunces'", fontWeight: 700, fontSize: "clamp(36px,6vw,72px)", letterSpacing: "-.03em", color: "var(--ink)", margin: 0 }}
           >
             {userType === "superadmin" ? "Super Admin" : "Tableau de bord"}
           </motion.h1>
@@ -105,7 +105,7 @@ export default function AdminDashboard() {
                   onMouseLeave={e => e.currentTarget.style.borderColor = "var(--line)"}
                 >
                   <div>
-                    <h2 style={{ fontFamily: "'Playfair Display'", fontWeight: 700, fontSize: 22, color: "var(--ink)", margin: "0 0 12px" }}>
+                    <h2 style={{ fontFamily: "'Fraunces'", fontWeight: 700, fontSize: 22, color: "var(--ink)", margin: "0 0 12px" }}>
                       {section.title}
                     </h2>
                     <p style={{ fontSize: 15, color: "var(--muted)", lineHeight: 1.6, margin: 0 }}>
