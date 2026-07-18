@@ -1,4 +1,5 @@
 import { useNavigate } from "react-router-dom";
+import Reveal from "../Shared/Reveal";
 
 const IconCatalog = () => (
   <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
@@ -50,67 +51,65 @@ export default function ServicesSection() {
   const navigate = useNavigate();
 
   return (
-    <section style={{ maxWidth: 1280, margin: "0 auto", padding: "60px 26px 70px" }}>
-      <div style={{ marginBottom: 36 }}>
-        <p style={{ fontFamily: "'Inter'", fontWeight: 700, fontSize: 12.5, letterSpacing: ".12em", color: "var(--secondary)", margin: "0 0 12px", textTransform: "uppercase" }}>
-          Nos services
-        </p>
-        <h2 style={{ fontFamily: "'Playfair Display'", fontWeight: 700, fontSize: "clamp(26px,4vw,42px)", letterSpacing: "-.01em", margin: 0, lineHeight: 1.15, color: "var(--ink)" }}>
+    <section style={{ maxWidth: 1280, margin: "0 auto", padding: "76px 26px 76px" }}>
+      <Reveal as="div" style={{ marginBottom: 40 }}>
+        <span className="nv-eyebrow" style={{ display: "inline-flex" }}>Nos services</span>
+        <h2 style={{ fontFamily: "'Playfair Display'", fontWeight: 700, fontSize: "clamp(26px,4vw,44px)", letterSpacing: "-.015em", margin: "14px 0 0", lineHeight: 1.12, color: "var(--ink)" }}>
           Plus qu'un simple magasin.
         </h2>
-      </div>
+      </Reveal>
 
-      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(280px,1fr))", gap: 20 }}>
-        {SERVICES.map(({ Icon, label, desc, to, gradient, tag, highlight }) => (
-          <div
-            key={tag}
-            onClick={() => navigate(to)}
-            style={{
-              position: "relative",
-              borderRadius: 22,
-              cursor: "pointer",
-              border: `1px solid ${highlight ? "rgb(var(--accent-rgb) / .35)" : "var(--line)"}`,
-              background: highlight ? "rgb(var(--accent-rgb) / .06)" : "var(--surface)",
-              padding: "34px 30px",
-              overflow: "hidden",
-              transition: "transform .25s, border-color .25s, box-shadow .25s",
-            }}
-            onMouseEnter={e => {
-              e.currentTarget.style.transform = "translateY(-5px)";
-              e.currentTarget.style.boxShadow = "0 22px 44px -22px rgba(43,33,24,.2)";
-            }}
-            onMouseLeave={e => {
-              e.currentTarget.style.transform = "translateY(0)";
-              e.currentTarget.style.boxShadow = "none";
-            }}
-          >
-            <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 22 }}>
-              <div style={{
-                width: 50, height: 50, borderRadius: 14,
-                background: `linear-gradient(135deg,${gradient[0]},${gradient[1]})`,
-                display: "flex", alignItems: "center", justifyContent: "center",
-              }}>
-                <Icon />
+      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(280px,1fr))", gap: 22 }}>
+        {SERVICES.map(({ Icon, label, desc, to, gradient, tag, highlight }, i) => (
+          <Reveal key={tag} delay={i * 90} style={{ height: "100%" }}>
+            <div
+              onClick={() => navigate(to)}
+              className="nv-rise"
+              style={{
+                position: "relative",
+                borderRadius: 24,
+                cursor: "pointer",
+                border: `1px solid ${highlight ? "rgb(var(--accent-rgb) / .4)" : "var(--line)"}`,
+                background: highlight
+                  ? "linear-gradient(160deg, rgb(var(--accent-rgb) / .1), var(--surface) 70%)"
+                  : "var(--surface)",
+                padding: "36px 32px",
+                overflow: "hidden",
+                height: "100%",
+              }}
+            >
+              {/* corner glow */}
+              <div style={{ position: "absolute", top: -40, right: -40, width: 140, height: 140, borderRadius: "50%", background: `radial-gradient(circle, ${gradient[0]}, transparent 68%)`, opacity: 0.14, pointerEvents: "none" }} />
+
+              <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 24 }}>
+                <div style={{
+                  width: 54, height: 54, borderRadius: 16,
+                  background: `linear-gradient(135deg,${gradient[0]},${gradient[1]})`,
+                  display: "flex", alignItems: "center", justifyContent: "center",
+                  boxShadow: `0 14px 26px -12px ${gradient[1]}`,
+                }}>
+                  <Icon />
+                </div>
+                <span style={{ fontFamily: "'Inter'", fontWeight: 600, fontSize: 10.5, letterSpacing: ".1em", color: "var(--muted)", padding: "6px 11px", border: "1px solid var(--line)", borderRadius: 999 }}>
+                  {tag}
+                </span>
               </div>
-              <span style={{ fontFamily: "'Inter'", fontWeight: 600, fontSize: 10.5, letterSpacing: ".08em", color: "var(--muted)", padding: "5px 10px", border: "1px solid var(--line)", borderRadius: 8 }}>
-                {tag}
-              </span>
-            </div>
 
-            <h3 style={{ fontFamily: "'Playfair Display'", fontWeight: 700, fontSize: 19, margin: "0 0 10px", color: "var(--ink)" }}>
-              {label}
-            </h3>
-            <p style={{ fontFamily: "'Inter'", fontSize: 14.5, color: "var(--muted)", margin: "0 0 26px", lineHeight: 1.6 }}>
-              {desc}
-            </p>
+              <h3 style={{ fontFamily: "'Playfair Display'", fontWeight: 700, fontSize: 20, margin: "0 0 10px", color: "var(--ink)" }}>
+                {label}
+              </h3>
+              <p style={{ fontFamily: "'Inter'", fontSize: 14.5, color: "var(--muted)", margin: "0 0 26px", lineHeight: 1.65 }}>
+                {desc}
+              </p>
 
-            <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
-              <span style={{ fontFamily: "'Inter'", fontWeight: 700, fontSize: 14, color: gradient[0] }}>
-                En savoir plus
-              </span>
-              <span style={{ fontSize: 14, color: gradient[0] }}>→</span>
+              <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+                <span style={{ fontFamily: "'Inter'", fontWeight: 700, fontSize: 14, color: gradient[0] }}>
+                  En savoir plus
+                </span>
+                <span style={{ fontSize: 14, color: gradient[0] }}>→</span>
+              </div>
             </div>
-          </div>
+          </Reveal>
         ))}
       </div>
     </section>
