@@ -24,7 +24,7 @@ const PlaceholderIcon = ({ size = 90 }) => (
 function PriceBlock({ price }) {
   return (
     <div style={{ display: "flex", alignItems: "baseline", gap: 13, marginBottom: 22 }}>
-      <span style={{ fontFamily: "'Playfair Display'", fontWeight: 700, fontSize: 38, background: "linear-gradient(120deg,var(--primary),var(--secondary))", WebkitBackgroundClip: "text", backgroundClip: "text", color: "transparent" }}>
+      <span style={{ fontFamily: "'Fraunces'", fontWeight: 700, fontSize: 38, background: "linear-gradient(120deg,var(--primary),var(--secondary))", WebkitBackgroundClip: "text", backgroundClip: "text", color: "transparent" }}>
         {(price || 0).toLocaleString()} DA
       </span>
     </div>
@@ -72,8 +72,8 @@ function RelatedCard({ item, onClick }) {
       </div>
       <div style={{ position: "relative", zIndex: 4, padding: 16 }}>
         <p style={{ fontFamily: "'Inter'", fontSize: 11, color: "var(--muted)", margin: "0 0 4px" }}>{item.category?.name || ""}</p>
-        <h3 style={{ fontFamily: "'Playfair Display'", fontWeight: 700, fontSize: 16, margin: "0 0 4px", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis", color: "var(--ink)" }}>{item.name}</h3>
-        <p style={{ fontFamily: "'Playfair Display'", fontWeight: 700, fontSize: 15, color: "var(--secondary)", margin: 0 }}>{(item.price || 0).toLocaleString()} DA</p>
+        <h3 style={{ fontFamily: "'Fraunces'", fontWeight: 700, fontSize: 16, margin: "0 0 4px", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis", color: "var(--ink)" }}>{item.name}</h3>
+        <p style={{ fontFamily: "'Fraunces'", fontWeight: 700, fontSize: 15, color: "var(--secondary)", margin: 0 }}>{(item.price || 0).toLocaleString()} DA</p>
       </div>
     </div>
   );
@@ -132,12 +132,12 @@ export default function ProductDetailsPage() {
 
   if (loading) return (
     <div style={{ minHeight: "100vh", display: "flex", alignItems: "center", justifyContent: "center" }}>
-      <p style={{ fontFamily: "'Playfair Display'", fontSize: 22, color: "var(--secondary)", animation: "glowPulse 1.5s infinite" }}>Chargement du produit…</p>
+      <p style={{ fontFamily: "'Fraunces'", fontSize: 22, color: "var(--secondary)", animation: "glowPulse 1.5s infinite" }}>Chargement du produit…</p>
     </div>
   );
   if (!item) return (
     <div style={{ minHeight: "100vh", display: "flex", alignItems: "center", justifyContent: "center" }}>
-      <p style={{ fontFamily: "'Playfair Display'", fontSize: 22, color: "var(--muted)" }}>Meuble introuvable.</p>
+      <p style={{ fontFamily: "'Fraunces'", fontSize: 22, color: "var(--muted)" }}>Meuble introuvable.</p>
     </div>
   );
 
@@ -196,7 +196,7 @@ export default function ProductDetailsPage() {
             )}
           </div>
 
-          <h1 style={{ fontFamily: "'Playfair Display'", fontWeight: 700, fontSize: "clamp(28px,4vw,46px)", letterSpacing: "-.01em", lineHeight: 1.1, margin: "0 0 12px", color: "var(--ink)" }}>{item.name}</h1>
+          <h1 style={{ fontFamily: "'Fraunces'", fontWeight: 700, fontSize: "clamp(28px,4vw,46px)", letterSpacing: "-.01em", lineHeight: 1.1, margin: "0 0 12px", color: "var(--ink)" }}>{item.name}</h1>
 
           {item.description && (
             <p style={{ fontSize: 16.5, lineHeight: 1.6, color: "var(--muted)", margin: "0 0 18px" }}>{item.description}</p>
@@ -252,7 +252,7 @@ export default function ProductDetailsPage() {
 
       {related.length > 0 && (
         <section style={{ marginTop: 64 }}>
-          <h2 style={{ fontFamily: "'Playfair Display'", fontWeight: 700, fontSize: 27, letterSpacing: "-.01em", margin: "0 0 22px", color: "var(--ink)" }}>Vous aimerez aussi</h2>
+          <h2 style={{ fontFamily: "'Fraunces'", fontWeight: 700, fontSize: 27, letterSpacing: "-.01em", margin: "0 0 22px", color: "var(--ink)" }}>Vous aimerez aussi</h2>
           <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill,minmax(220px,1fr))", gap: 18 }}>
             {related.map(a => <RelatedCard key={a._id} item={a} onClick={() => navigate(`/products/${a._id}`)} />)}
           </div>

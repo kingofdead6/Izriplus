@@ -65,7 +65,7 @@ export default function CartPage() {
         <div style={{ display: "flex", justifyContent: "center", marginBottom: 20 }}>
           <PlaceholderIcon size={72} />
         </div>
-        <h1 style={{ fontFamily: "'Playfair Display'", fontWeight: 700, fontSize: "clamp(28px,5vw,46px)", color: "var(--ink)", marginTop: 0, marginBottom: 32 }}>
+        <h1 style={{ fontFamily: "'Fraunces'", fontWeight: 700, fontSize: "clamp(28px,5vw,46px)", color: "var(--ink)", marginTop: 0, marginBottom: 32 }}>
           Votre panier est vide
         </h1>
         <Link
@@ -86,7 +86,7 @@ export default function CartPage() {
           <Link to="/products" style={{ color: "var(--muted)", textDecoration: "none", display: "flex" }}>
             <ArrowLeft size={26} />
           </Link>
-          <h1 style={{ fontFamily: "'Playfair Display'", fontWeight: 700, fontSize: "clamp(26px,5vw,44px)", color: "var(--ink)", margin: 0 }}>
+          <h1 style={{ fontFamily: "'Fraunces'", fontWeight: 700, fontSize: "clamp(26px,5vw,44px)", color: "var(--ink)", margin: 0 }}>
             Votre panier ({cartItems.length})
           </h1>
         </div>
@@ -110,7 +110,7 @@ export default function CartPage() {
                   </Link>
 
                   <div style={{ flex: 1, minWidth: 200 }}>
-                    <h3 style={{ fontFamily: "'Playfair Display'", fontWeight: 700, fontSize: 17, color: "var(--ink)", margin: "0 0 12px" }}>
+                    <h3 style={{ fontFamily: "'Fraunces'", fontWeight: 700, fontSize: 17, color: "var(--ink)", margin: "0 0 12px" }}>
                       {item.name}
                     </h3>
 
@@ -127,7 +127,7 @@ export default function CartPage() {
                     </div>
 
                     <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", gap: 12, flexWrap: "wrap" }}>
-                      <p style={{ fontFamily: "'Playfair Display'", fontWeight: 700, fontSize: 20, color: "var(--secondary)", margin: 0 }}>
+                      <p style={{ fontFamily: "'Fraunces'", fontWeight: 700, fontSize: 20, color: "var(--secondary)", margin: 0 }}>
                         {(item.price * item.quantity).toLocaleString()} DA
                       </p>
                       <button
@@ -145,7 +145,7 @@ export default function CartPage() {
 
           {/* Order Summary */}
           <div style={{ background: "var(--surface)", border: "1px solid var(--line)", borderRadius: 20, padding: 28, alignSelf: "start", gridColumn: "1 / -1", maxWidth: 420, marginLeft: "auto", width: "100%" }}>
-            <h3 style={{ fontFamily: "'Playfair Display'", fontWeight: 700, fontSize: 21, color: "var(--ink)", margin: "0 0 22px" }}>
+            <h3 style={{ fontFamily: "'Fraunces'", fontWeight: 700, fontSize: 21, color: "var(--ink)", margin: "0 0 22px" }}>
               Récapitulatif
             </h3>
 
@@ -159,7 +159,7 @@ export default function CartPage() {
               </p>
               <div style={{ paddingTop: 16, borderTop: "1px solid var(--line)", display: "flex", justifyContent: "space-between", fontSize: 19, fontWeight: 700, color: "var(--ink)" }}>
                 <span>Total</span>
-                <span style={{ color: "var(--secondary)", fontFamily: "'Playfair Display'" }}>{subtotal.toLocaleString()} DA</span>
+                <span style={{ color: "var(--secondary)", fontFamily: "'Fraunces'" }}>{subtotal.toLocaleString()} DA</span>
               </div>
             </div>
 

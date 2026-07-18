@@ -92,7 +92,7 @@ export default function AdminDeliveryAreas() {
       <div style={{ maxWidth: 1280, margin: "0 auto" }}>
         {/* Header */}
         <div style={{ textAlign: "center", marginBottom: 40 }}>
-          <h1 style={{ fontFamily: "'Playfair Display'", fontWeight: 700, fontSize: "clamp(28px,5vw,56px)", color: "var(--ink)", margin: "0 0 8px" }}>
+          <h1 style={{ fontFamily: "'Fraunces'", fontWeight: 700, fontSize: "clamp(28px,5vw,56px)", color: "var(--ink)", margin: "0 0 8px" }}>
             Delivery Areas
           </h1>
           <p style={{ color: "var(--muted)", fontSize: 16, margin: 0 }}>Add, edit and manage delivery prices and desks</p>
@@ -138,7 +138,7 @@ export default function AdminDeliveryAreas() {
                 onClick={() => handleEdit(area)}
               >
                 <div style={{ padding: 24, textAlign: "center" }}>
-                  <h3 style={{ fontFamily: "'Playfair Display'", fontWeight: 700, fontSize: 22, color: "var(--ink)", margin: "0 0 16px" }}>{area.wilaya}</h3>
+                  <h3 style={{ fontFamily: "'Fraunces'", fontWeight: 700, fontSize: 22, color: "var(--ink)", margin: "0 0 16px" }}>{area.wilaya}</h3>
                   <div style={{ display: "flex", justifyContent: "center", gap: 8, alignItems: "center", marginBottom: 10, color: "#2d6b3a", fontSize: 16 }}>
                     <Home size={20} />
                     <span style={{ fontWeight: 700 }}>{area.priceHome.toLocaleString()} DA</span>
@@ -187,7 +187,7 @@ export default function AdminDeliveryAreas() {
               onClick={e => e.stopPropagation()}
             >
               <div style={{ padding: "22px 28px 18px", borderBottom: "1px solid var(--line)", flexShrink: 0 }}>
-                <h2 style={{ fontFamily: "'Playfair Display'", fontWeight: 700, fontSize: 24, color: "var(--ink)", margin: 0 }}>
+                <h2 style={{ fontFamily: "'Fraunces'", fontWeight: 700, fontSize: 24, color: "var(--ink)", margin: 0 }}>
                   {editingId ? "Edit Wilaya" : "Add New Wilaya"}
                 </h2>
               </div>

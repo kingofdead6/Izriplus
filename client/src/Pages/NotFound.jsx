@@ -10,7 +10,7 @@ export default function NotFound() {
         initial={{ opacity: 0, y: 30 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8, ease: "easeOut" }}
-        style={{ fontFamily: "'Playfair Display'", fontSize: "clamp(96px,18vw,180px)", fontWeight: 700, letterSpacing: "-.03em", color: "rgb(var(--secondary-rgb) / .3)", lineHeight: 1, marginBottom: 20 }}
+        style={{ fontFamily: "'Fraunces'", fontSize: "clamp(96px,18vw,180px)", fontWeight: 700, letterSpacing: "-.03em", color: "rgb(var(--secondary-rgb) / .3)", lineHeight: 1, marginBottom: 20 }}
       >
         404
       </motion.div>
@@ -19,7 +19,7 @@ export default function NotFound() {
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.2, duration: 0.8 }}
-        style={{ fontFamily: "'Playfair Display'", fontWeight: 700, fontSize: "clamp(28px,5vw,48px)", letterSpacing: "-.01em", color: "var(--ink)", marginBottom: 16 }}
+        style={{ fontFamily: "'Fraunces'", fontWeight: 700, fontSize: "clamp(28px,5vw,48px)", letterSpacing: "-.01em", color: "var(--ink)", marginBottom: 16 }}
       >
         Page introuvable
       </motion.h1>

@@ -114,7 +114,7 @@ export default function AdminUsers() {
         <div style={{ maxWidth: 1280, margin: "0 auto" }}>
           {/* Header */}
           <div style={{ textAlign: "center", marginBottom: 40 }}>
-            <h1 style={{ fontFamily: "'Playfair Display'", fontWeight: 700, fontSize: "clamp(28px,5vw,56px)", color: "var(--ink)", margin: "0 0 8px" }}>
+            <h1 style={{ fontFamily: "'Fraunces'", fontWeight: 700, fontSize: "clamp(28px,5vw,56px)", color: "var(--ink)", margin: "0 0 8px" }}>
               Manage Admins
             </h1>
             <p style={{ color: "var(--muted)", fontSize: 16, margin: 0 }}>Create, edit and manage admin & superadmin accounts</p>
@@ -169,7 +169,7 @@ export default function AdminUsers() {
                         ? <ShieldCheck size={52} style={{ color: "var(--primary)" }} />
                         : <Shield size={52} style={{ color: "#1d4ed8" }} />}
                     </div>
-                    <h3 style={{ fontFamily: "'Playfair Display'", fontWeight: 700, fontSize: 18, color: "var(--ink)", margin: "0 0 6px" }}>{user.name}</h3>
+                    <h3 style={{ fontFamily: "'Fraunces'", fontWeight: 700, fontSize: 18, color: "var(--ink)", margin: "0 0 6px" }}>{user.name}</h3>
                     <p style={{ fontSize: 13, color: "var(--muted)", margin: "0 0 14px" }}>{user.email}</p>
                     <span style={{ display: "inline-block", padding: "4px 16px", borderRadius: 999, fontSize: 12, fontWeight: 700, fontFamily: "'Inter'", background: user.usertype === "superadmin" ? "rgb(var(--secondary-rgb) / .2)" : "rgba(59,130,246,.2)", color: user.usertype === "superadmin" ? "var(--primary)" : "#1d4ed8", border: `1px solid ${user.usertype === "superadmin" ? "rgb(var(--secondary-rgb) / .4)" : "rgba(59,130,246,.4)"}` }}>
                       {user.usertype === "superadmin" ? "SUPERADMIN" : "ADMIN"}
@@ -281,7 +281,7 @@ function Modal({ children, title, onClose }) {
         onClick={e => e.stopPropagation()}
       >
         <div style={{ padding: "22px 26px 18px", display: "flex", justifyContent: "space-between", alignItems: "center", borderBottom: "1px solid var(--line)", flexShrink: 0 }}>
-          <h2 style={{ fontFamily: "'Playfair Display'", fontWeight: 700, fontSize: 22, color: "var(--ink)", margin: 0 }}>{title}</h2>
+          <h2 style={{ fontFamily: "'Fraunces'", fontWeight: 700, fontSize: 22, color: "var(--ink)", margin: 0 }}>{title}</h2>
           <button onClick={onClose} style={{ background: "var(--surface-soft)", border: "1px solid var(--line)", borderRadius: 10, padding: 6, cursor: "pointer", color: "var(--muted)", display: "flex" }}>
             <X size={20} />
           </button>

@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600;700;800&family=Inter:wght@400;500;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..600;1,9..144,300..500&family=Inter:wght@400;500;600;700&display=swap');
 @import "tailwindcss";
 
 /*
@@ -22,12 +22,16 @@
   --secondary-rgb: 193 104 60;
   --accent-rgb: 184 151 90;
 
-  --bg: #F7F1E8;          /* warm ivory page background */
-  --surface: #FFFFFF;     /* card / panel surface */
-  --surface-soft: #FBF6EC;/* recessed panels, skeletons */
-  --ink: #2B2118;         /* primary text — warm near-black */
-  --muted: #7A6A5C;       /* secondary text — warm taupe */
-  --line: rgba(43,33,24,0.12);
+  --bg: #F3EEE6;          /* soft linen / greige page background */
+  --surface: #FBF9F4;     /* warm off-white card / panel surface */
+  --surface-soft: #ECE5D9;/* recessed panels, skeletons */
+  --ink: #23190F;         /* primary text — deep espresso near-black */
+  --muted: #6C5F52;       /* secondary text — warm taupe */
+  --line: rgba(35,25,15,0.12);
+
+  /* Typography roles */
+  --font-display: 'Fraunces', Georgia, 'Times New Roman', serif;
+  --font-body: 'Inter', system-ui, sans-serif;
 }
 
 /*
@@ -50,12 +54,23 @@ body {
   margin: 0;
   background: var(--bg);
   color: var(--ink);
-  font-family: 'Inter', system-ui, sans-serif;
+  font-family: var(--font-body);
+  font-size: 16px;
+  line-height: 1.6;
   -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
   overflow-x: hidden;
 }
 
-::selection { background: var(--secondary); color: #fff; }
+/* Editorial display type — Fraunces, quiet weights, tight tracking */
+h1, h2, h3, h4 {
+  font-family: var(--font-display);
+  font-weight: 500;
+  letter-spacing: -0.015em;
+  font-optical-sizing: auto;
+}
+
+::selection { background: var(--ink); color: var(--bg); }
 
 * { scrollbar-width: thin; scrollbar-color: rgb(var(--primary-rgb) / .35) transparent; }
 ::-webkit-scrollbar { width: 9px; height: 9px; }
@@ -159,229 +174,144 @@ body {
 }
 
 /* ═══════════════════════════════════════════════════════════════════════════
-   ELEGANT DESIGN SYSTEM
-   Layered ambient background, scroll-reveals, gradient type, premium buttons,
-   ornamental dividers and refined card interactions. All warm-palette, all
-   driven by the same brand CSS variables so store.config.js stays the one knob.
+   EDITORIAL DESIGN SYSTEM  —  quiet-luxury furniture showroom
+   Restrained type, generous whitespace, photography-forward, hairline rules.
+   No ambient blobs, gradients-as-decoration, or gimmick motion. Everything
+   still reads from the brand CSS variables so store.config.js stays the knob.
    ═══════════════════════════════════════════════════════════════════════════ */
 
-/* ── Ambient aurora background (referenced by App.jsx) ── */
-.nv-aurora-bg {
-  position: fixed;
-  inset: 0;
-  z-index: 0;
-  pointer-events: none;
-  overflow: hidden;
-  background:
-    radial-gradient(1200px 700px at 78% -8%, rgb(var(--accent-rgb) / .10), transparent 60%),
-    radial-gradient(900px 620px at 8% 12%, rgb(var(--secondary-rgb) / .10), transparent 62%),
-    var(--bg);
-}
-.nv-aurora-a,
-.nv-aurora-b,
-.nv-aurora-c {
-  position: absolute;
-  border-radius: 50%;
-  filter: blur(90px);
-  opacity: .55;
-  will-change: transform;
-}
-.nv-aurora-a {
-  width: 46vw; height: 46vw; top: -12vw; left: -8vw;
-  background: radial-gradient(circle, rgb(var(--secondary-rgb) / .30), transparent 68%);
-  animation: auroraDrift 24s ease-in-out infinite;
-}
-.nv-aurora-b {
-  width: 42vw; height: 42vw; top: 28vh; right: -12vw;
-  background: radial-gradient(circle, rgb(var(--accent-rgb) / .26), transparent 66%);
-  animation: auroraDrift 30s ease-in-out infinite reverse;
-}
-.nv-aurora-c {
-  width: 40vw; height: 40vw; bottom: -16vw; left: 26vw;
-  background: radial-gradient(circle, rgb(var(--primary-rgb) / .18), transparent 68%);
-  animation: auroraDrift 27s ease-in-out infinite 2s;
-}
+/* Neutralize the legacy aurora wrapper (App.jsx still renders it) → calm wash */
+.nv-aurora-bg { position: fixed; inset: 0; z-index: 0; pointer-events: none; background: var(--bg); }
+.nv-aurora-bg > div { display: none; }
 
-/* Fine paper grain over the whole page for a crafted, tactile feel */
-body::before {
-  content: "";
-  position: fixed;
-  inset: 0;
-  z-index: 0;
-  pointer-events: none;
-  opacity: .5;
-  mix-blend-mode: multiply;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");
-}
-
-/* ── Additional keyframes ── */
-@keyframes auroraDrift {
-  0%,100% { transform: translate(0,0) scale(1); }
-  33%     { transform: translate(4vw,-3vh) scale(1.08); }
-  66%     { transform: translate(-3vw,4vh) scale(.96); }
-}
-@keyframes gradientPan { to { background-position: 200% center; } }
-@keyframes marquee    { to { transform: translateX(-50%); } }
-@keyframes kenBurns {
-  0%   { transform: scale(1) translate(0,0); }
-  100% { transform: scale(1.09) translate(-1.5%,-1.5%); }
-}
-@keyframes spinSlow   { to { transform: rotate(360deg); } }
-@keyframes sheenSweep { to { transform: translateX(160%) skewX(-18deg); } }
-@keyframes revealUp {
-  from { opacity: 0; transform: translateY(26px); }
-  to   { opacity: 1; transform: translateY(0); }
-}
-
-/* ── Scroll reveal (toggled by IntersectionObserver in Reveal.jsx) ── */
+/* ── Scroll reveal — subtle fade + short lift (toggled by Reveal.jsx) ── */
 .nv-reveal {
   opacity: 0;
-  transform: translateY(30px);
-  transition: opacity .85s cubic-bezier(.2,.7,.2,1), transform .85s cubic-bezier(.2,.7,.2,1);
+  transform: translateY(18px);
+  transition: opacity .7s cubic-bezier(.22,.61,.36,1), transform .7s cubic-bezier(.22,.61,.36,1);
   will-change: opacity, transform;
 }
 .nv-reveal.is-visible { opacity: 1; transform: none; }
-.nv-reveal-scale { transform: translateY(24px) scale(.965); }
-.nv-reveal-left  { transform: translateX(-32px); }
-.nv-reveal-right { transform: translateX(32px); }
+.nv-reveal-scale { transform: translateY(14px) scale(.99); }
+.nv-reveal-left  { transform: translateX(-22px); }
+.nv-reveal-right { transform: translateX(22px); }
 
-/* ── Gradient / shimmering type ── */
-.nv-gradient-text {
-  background: linear-gradient(110deg, var(--secondary), var(--accent) 45%, var(--secondary));
-  background-size: 220% auto;
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-  animation: gradientPan 7s linear infinite;
-}
-
-/* ── Section eyebrow with lead rule ── */
+/* ── Section eyebrow — small caps label with a short lead rule ── */
 .nv-eyebrow {
   display: inline-flex;
   align-items: center;
   gap: 12px;
-  font-family: 'Inter', sans-serif;
-  font-weight: 700;
-  font-size: 12px;
-  letter-spacing: .18em;
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: 11.5px;
+  letter-spacing: .22em;
   text-transform: uppercase;
   color: var(--secondary);
 }
 .nv-eyebrow::before {
   content: "";
-  width: 30px;
-  height: 1.5px;
-  background: linear-gradient(90deg, transparent, var(--secondary));
-  border-radius: 2px;
+  width: 26px;
+  height: 1px;
+  background: currentColor;
+  opacity: .6;
 }
 .nv-eyebrow--center::after {
   content: "";
-  width: 30px;
-  height: 1.5px;
-  background: linear-gradient(90deg, var(--secondary), transparent);
-  border-radius: 2px;
-}
-
-/* ── Ornamental divider ── */
-.nv-divider { display: flex; align-items: center; justify-content: center; gap: 16px; }
-.nv-divider::before,
-.nv-divider::after {
-  content: "";
+  width: 26px;
   height: 1px;
-  width: min(140px, 24vw);
-  background: linear-gradient(90deg, transparent, rgb(var(--accent-rgb) / .55));
-}
-.nv-divider::after { background: linear-gradient(90deg, rgb(var(--accent-rgb) / .55), transparent); }
-.nv-diamond {
-  width: 9px; height: 9px;
-  transform: rotate(45deg);
-  background: linear-gradient(135deg, var(--secondary), var(--accent));
-  border-radius: 2px;
-  box-shadow: 0 0 0 4px rgb(var(--accent-rgb) / .12);
+  background: currentColor;
+  opacity: .6;
 }
 
-/* ── Premium primary button (light sheen sweep on hover) ── */
+/* ── Hairline rule ── */
+.nv-rule { height: 1px; background: var(--line); border: 0; }
+
+/* ── Buttons ─────────────────────────────────────────────────────────────── */
 .nv-btn {
-  position: relative;
-  overflow: hidden;
-  isolation: isolate;
-  transition: transform .25s cubic-bezier(.2,.9,.3,1), box-shadow .3s;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: 15px;
+  letter-spacing: .01em;
+  padding: 15px 30px;
+  border-radius: 4px;
+  cursor: pointer;
+  border: 1px solid transparent;
+  transition: background .3s ease, color .3s ease, border-color .3s ease, transform .3s ease;
 }
-.nv-btn::after {
-  content: "";
-  position: absolute;
-  top: 0; left: 0;
-  width: 45%; height: 100%;
-  background: linear-gradient(100deg, transparent, rgba(255,255,255,.4), transparent);
-  transform: translateX(-160%) skewX(-18deg);
-  z-index: -1;
-}
-.nv-btn:hover { transform: translateY(-2px); }
-.nv-btn:hover::after { animation: sheenSweep .8s ease; }
-.nv-btn:active { transform: translateY(0); }
+.nv-btn:active { transform: translateY(1px); }
 
-/* ── Animated underline link ── */
-.nv-link { position: relative; }
+/* Solid — deep espresso ink */
+.nv-btn-solid { background: var(--ink); color: var(--bg); }
+.nv-btn-solid:hover { background: var(--primary); }
+
+/* Outline — hairline on ivory */
+.nv-btn-outline { background: transparent; color: var(--ink); border-color: rgb(35 25 15 / .3); }
+.nv-btn-outline:hover { border-color: var(--ink); background: var(--ink); color: var(--bg); }
+
+/* Light — for dark backgrounds */
+.nv-btn-light { background: var(--bg); color: var(--ink); }
+.nv-btn-light:hover { background: #fff; }
+
+/* ── Text link with sliding underline + arrow ── */
+.nv-link {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: 14px;
+  color: var(--ink);
+  cursor: pointer;
+  background: none;
+  border: none;
+  padding: 0;
+}
 .nv-link::after {
   content: "";
   position: absolute;
-  left: 0; bottom: -3px;
-  height: 1.5px; width: 100%;
+  left: 0; bottom: -4px;
+  height: 1px; width: 100%;
   background: currentColor;
   transform: scaleX(0);
   transform-origin: right;
-  transition: transform .4s cubic-bezier(.2,.7,.2,1);
+  transition: transform .4s cubic-bezier(.22,.61,.36,1);
 }
 .nv-link:hover::after { transform: scaleX(1); transform-origin: left; }
-
-/* ── Elevate-on-hover card ── */
-.nv-rise { transition: transform .4s cubic-bezier(.2,.9,.3,1), box-shadow .4s, border-color .4s; }
-.nv-rise:hover {
-  transform: translateY(-8px);
-  box-shadow: 0 34px 60px -30px rgb(var(--primary-rgb) / .4);
-  border-color: rgb(var(--secondary-rgb) / .45);
-}
+.nv-link .nv-link__arrow { transition: transform .3s ease; }
+.nv-link:hover .nv-link__arrow { transform: translateX(4px); }
 
 /* ── Media zoom wrapper (product / category photos) ── */
 .nv-media { overflow: hidden; }
-.nv-media img { transition: transform .7s cubic-bezier(.2,.9,.3,1); }
-.nv-rise:hover .nv-media img,
-.nv-media:hover img { transform: scale(1.07); }
+.nv-media img { transition: transform .9s cubic-bezier(.22,.61,.36,1); }
+.nv-media:hover img,
+.nv-card:hover .nv-media img { transform: scale(1.05); }
 
-/* ── Marquee trust strip ── */
-.nv-marquee { display: flex; overflow: hidden; -webkit-mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent); mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent); }
-.nv-marquee__track { display: flex; align-items: center; gap: 54px; white-space: nowrap; animation: marquee 30s linear infinite; }
-.nv-marquee:hover .nv-marquee__track { animation-play-state: paused; }
-
-/* ── Ken Burns for the hero photo ── */
-.nv-kenburns { animation: kenBurns 16s ease-in-out infinite alternate; }
-
-/* ── Decorative slow-spinning ring ── */
-.nv-spin-slow { animation: spinSlow 26s linear infinite; }
-
-/* ── Frosted glass panel ── */
-.nv-glass {
-  background: rgba(255,255,255,.62);
-  backdrop-filter: blur(16px) saturate(1.2);
-  -webkit-backdrop-filter: blur(16px) saturate(1.2);
-  border: 1px solid rgba(255,255,255,.7);
-  box-shadow: 0 24px 60px -34px rgb(var(--primary-rgb) / .35);
+/* ── Product / editorial card — clean, hairline, quiet hover ── */
+.nv-card {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  overflow: hidden;
+  transition: border-color .35s ease, box-shadow .35s ease, transform .35s ease;
+}
+.nv-card:hover {
+  border-color: rgb(35 25 15 / .22);
+  box-shadow: 0 20px 44px -30px rgb(35 25 15 / .3);
+  transform: translateY(-3px);
 }
 
 /* ── Mobile responsive ── */
 @media (max-width: 860px) {
   .nv-hero-row { flex-direction: column !important; }
-  .nv-brand-row { height: auto !important; flex-wrap: wrap; }
-  .nv-brand-card { flex: unset !important; width: calc(50% - 7px) !important; height: 170px; }
-}
-@media (max-width: 640px) {
-  .nv-brand-card { width: 100% !important; }
 }
 
 /* ── Respect reduced-motion preferences ── */
 @media (prefers-reduced-motion: reduce) {
-  .nv-aurora-a, .nv-aurora-b, .nv-aurora-c,
-  .nv-gradient-text, .nv-kenburns, .nv-spin-slow,
-  .nv-marquee__track { animation: none !important; }
   .nv-reveal { opacity: 1 !important; transform: none !important; transition: none !important; }
+  .nv-media img { transition: none !important; }
 }

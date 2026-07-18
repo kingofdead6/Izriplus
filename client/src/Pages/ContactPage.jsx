@@ -6,22 +6,22 @@ import { store } from "../store.config.js";
 import Reveal from "../Components/Shared/Reveal";
 
 const IconPhone = () => (
-  <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round">
+  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
     <path d="M22 16.9v3a2 2 0 01-2.2 2 19.8 19.8 0 01-8.6-3.1 19.5 19.5 0 01-6-6A19.8 19.8 0 012.1 4.2 2 2 0 014.1 2h3a2 2 0 012 1.7c.1 1 .4 1.9.7 2.8a2 2 0 01-.5 2.1L8.1 9.9a16 16 0 006 6l1.3-1.3a2 2 0 012.1-.4c.9.3 1.8.6 2.8.7a2 2 0 011.7 2z" />
   </svg>
 );
 const IconMail = () => (
-  <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round">
+  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
     <rect x="2" y="4" width="20" height="16" rx="2" /><path d="M2 7l10 6 10-6" />
   </svg>
 );
 const IconPin = () => (
-  <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round">
+  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
     <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z" /><circle cx="12" cy="10" r="3" />
   </svg>
 );
 const IconWhatsapp = () => (
-  <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+  <svg width="19" height="19" viewBox="0 0 24 24" fill="currentColor">
     <path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2 22l5.25-1.38a9.9 9.9 0 004.79 1.22h.01c5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.82 9.82 0 0012.04 2zm5.8 14.13c-.24.68-1.42 1.31-1.95 1.36-.5.05-1.13.07-1.82-.11-.42-.13-.96-.31-1.65-.61-2.9-1.25-4.79-4.17-4.94-4.36-.14-.19-1.18-1.57-1.18-2.99s.75-2.12 1.01-2.41c.26-.29.57-.36.76-.36.19 0 .38 0 .55.01.18.01.42-.07.65.5.24.58.82 2 .89 2.15.07.14.12.31.02.5-.09.19-.14.31-.28.48-.14.17-.29.37-.42.5-.14.14-.28.29-.12.57.16.28.72 1.18 1.54 1.91 1.06.95 1.95 1.24 2.23 1.38.28.14.44.12.6-.07.16-.19.69-.8.87-1.08.18-.28.36-.23.61-.14.25.09 1.6.75 1.87.89.28.14.46.21.53.33.07.12.07.68-.17 1.36z" />
   </svg>
 );
@@ -45,20 +45,13 @@ export default function ContactPage() {
   };
 
   const inputStyle = {
-    width: "100%", padding: "14px 18px", borderRadius: 14,
-    background: "var(--surface)", border: "1px solid var(--line)",
-    color: "var(--ink)", fontFamily: "'Inter'", fontSize: 15, outline: "none",
-    transition: "border-color .2s, box-shadow .2s", boxSizing: "border-box",
+    width: "100%", padding: "13px 0", borderRadius: 0,
+    background: "transparent", border: "none", borderBottom: "1px solid var(--line)",
+    color: "var(--ink)", fontFamily: "var(--font-body)", fontSize: 15.5, outline: "none",
+    transition: "border-color .25s", boxSizing: "border-box",
   };
-
-  const onFocus = e => {
-    e.target.style.borderColor = "rgb(var(--secondary-rgb) / .6)";
-    e.target.style.boxShadow = "0 0 0 4px rgb(var(--secondary-rgb) / .1)";
-  };
-  const onBlur = e => {
-    e.target.style.borderColor = "var(--line)";
-    e.target.style.boxShadow = "none";
-  };
+  const onFocus = e => (e.target.style.borderBottomColor = "var(--ink)");
+  const onBlur = e => (e.target.style.borderBottomColor = "var(--line)");
 
   const CONTACT_ITEMS = [
     { Icon: IconPhone, label: "Téléphone", value: store.contact.phone, href: `tel:${store.contact.phoneHref}` },
@@ -68,140 +61,90 @@ export default function ContactPage() {
 
   return (
     <main style={{ minHeight: "100vh", position: "relative", zIndex: 2 }}>
-      <section style={{ maxWidth: 1180, margin: "0 auto", padding: "72px 26px 100px" }}>
-        {/* Header */}
-        <Reveal as="div" style={{ textAlign: "center", marginBottom: 52, maxWidth: 680, marginInline: "auto" }}>
-          <span className="nv-eyebrow nv-eyebrow--center" style={{ display: "inline-flex", marginBottom: 16 }}>Contact</span>
-          <h1 style={{ fontFamily: "'Playfair Display'", fontWeight: 700, fontSize: "clamp(34px,5.4vw,58px)", letterSpacing: "-.02em", margin: "12px 0 18px", lineHeight: 1.06, color: "var(--ink)" }}>
-            Parlons de votre <span className="nv-gradient-text italic">projet</span>
+      {/* Header */}
+      <section className="border-b border-[var(--line)]">
+        <Reveal as="div" className="max-w-[1180px] mx-auto px-6 sm:px-8 pt-20 pb-16 md:pt-28 md:pb-20 max-w-[720px]">
+          <span className="nv-eyebrow mb-6">Contact</span>
+          <h1 className="text-ink mt-6 mb-5" style={{ fontFamily: "'Fraunces', serif", fontWeight: 400, fontSize: "clamp(38px,5.4vw,64px)", lineHeight: 1.03, letterSpacing: "-0.02em" }}>
+            Parlons de votre <span style={{ fontStyle: "italic" }}>projet</span>
           </h1>
-          <p style={{ fontFamily: "'Inter'", fontSize: 16.5, color: "var(--muted)", margin: 0, lineHeight: 1.7 }}>
-            Une question sur un meuble, un devis ou une livraison ? Écrivez-nous, notre équipe vous répond rapidement.
+          <p className="text-[var(--muted)] text-[17px] leading-[1.7] m-0 max-w-[540px]">
+            Une question sur un meuble, un devis ou une livraison ? Écrivez-nous, notre équipe vous répond
+            rapidement.
           </p>
         </Reveal>
+      </section>
 
-        {/* Split layout: info panel + form */}
-        <div style={{ display: "grid", gridTemplateColumns: "minmax(0, 0.85fr) minmax(0, 1.15fr)", gap: 26, alignItems: "start" }} className="contact-grid">
-          {/* Left — dark info panel */}
-          <Reveal variant="left" as="aside"
-            style={{
-              position: "relative", borderRadius: 28, overflow: "hidden",
-              background: "linear-gradient(160deg,#4A2F1B,#5A3A22 55%,#6B4226)",
-              padding: "40px 34px",
-              boxShadow: "0 40px 80px -40px rgb(var(--primary-rgb) / .7)",
-            }}
-          >
-            <div style={{ position: "absolute", top: "-30%", right: "-20%", width: "70%", height: "80%", background: "radial-gradient(circle,rgb(var(--secondary-rgb) / .5),transparent 65%)", filter: "blur(46px)", pointerEvents: "none" }} />
-            <div style={{ position: "relative", zIndex: 2 }}>
-              <h2 style={{ fontFamily: "'Playfair Display'", fontWeight: 700, fontSize: 24, color: "#fff", margin: "0 0 10px" }}>Nos coordonnées</h2>
-              <p style={{ fontFamily: "'Inter'", fontSize: 14.5, color: "rgba(255,255,255,.78)", margin: "0 0 30px", lineHeight: 1.6 }}>
-                Passez à l'atelier ou joignez-nous directement.
-              </p>
+      <section className="max-w-[1180px] mx-auto px-6 sm:px-8 py-16 md:py-20">
+        <div className="grid grid-cols-1 lg:grid-cols-[0.8fr_1.2fr] gap-8 lg:gap-16 items-start">
+          {/* Left — info panel (solid espresso) */}
+          <Reveal variant="left" as="aside" className="rounded-[6px] p-8 md:p-10" style={{ background: "var(--ink)" }}>
+            <h2 className="m-0 mb-2.5" style={{ fontFamily: "'Fraunces', serif", fontWeight: 500, fontSize: 23, color: "var(--bg)" }}>Nos coordonnées</h2>
+            <p className="m-0 mb-9 text-[14.5px] leading-[1.6]" style={{ color: "rgba(243,238,230,.65)" }}>Passez à l'atelier ou joignez-nous directement.</p>
 
-              <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
-                {CONTACT_ITEMS.map(({ Icon, label, value, href }) => {
-                  const inner = (
-                    <>
-                      <span style={{ width: 44, height: 44, borderRadius: 13, background: "rgba(255,255,255,.12)", border: "1px solid rgba(255,255,255,.2)", display: "flex", alignItems: "center", justifyContent: "center", shrink: 0, flexShrink: 0 }}>
-                        <Icon />
-                      </span>
-                      <div>
-                        <p style={{ fontFamily: "'Inter'", fontSize: 10.5, color: "rgba(255,255,255,.6)", margin: "0 0 4px", letterSpacing: ".1em", textTransform: "uppercase", fontWeight: 600 }}>{label}</p>
-                        <p style={{ fontFamily: "'Inter'", fontSize: 14.5, fontWeight: 600, color: "#fff", margin: 0 }}>{value}</p>
-                      </div>
-                    </>
-                  );
-                  const boxStyle = { display: "flex", gap: 15, alignItems: "center", padding: "13px 14px", borderRadius: 16, textDecoration: "none", transition: "background .2s" };
-                  return href ? (
-                    <a key={label} href={href} style={boxStyle}
-                      onMouseEnter={e => (e.currentTarget.style.background = "rgba(255,255,255,.07)")}
-                      onMouseLeave={e => (e.currentTarget.style.background = "transparent")}
-                    >{inner}</a>
-                  ) : (
-                    <div key={label} style={boxStyle}>{inner}</div>
-                  );
-                })}
-              </div>
+            <div className="flex flex-col">
+              {CONTACT_ITEMS.map(({ Icon, label, value, href }, i) => {
+                const inner = (
+                  <>
+                    <span className="shrink-0 mt-0.5" style={{ color: "var(--accent)" }}><Icon /></span>
+                    <div>
+                      <p className="m-0 mb-1 text-[10.5px] uppercase" style={{ letterSpacing: ".14em", color: "rgba(243,238,230,.5)" }}>{label}</p>
+                      <p className="m-0 text-[15px] font-medium" style={{ color: "var(--bg)" }}>{value}</p>
+                    </div>
+                  </>
+                );
+                const cls = `flex gap-4 items-start py-5 ${i > 0 ? "border-t border-white/10" : ""}`;
+                return href ? (
+                  <a key={label} href={href} className={cls + " no-underline transition-opacity hover:opacity-75"}>{inner}</a>
+                ) : (
+                  <div key={label} className={cls}>{inner}</div>
+                );
+              })}
+            </div>
 
-              {/* WhatsApp CTA */}
-              <a
-                href={`https://wa.me/${store.contact.whatsapp}`}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="nv-btn"
-                style={{
-                  display: "flex", alignItems: "center", justifyContent: "center", gap: 10,
-                  padding: "15px 24px", marginTop: 26, borderRadius: 14,
-                  background: "#25D366", color: "#0b3d1e",
-                  fontFamily: "'Inter'", fontWeight: 700, fontSize: 15,
-                  textDecoration: "none", boxShadow: "0 16px 30px -14px rgba(37,211,102,.7)",
-                }}
-              >
-                <IconWhatsapp /> Écrire sur WhatsApp
-              </a>
+            <a
+              href={`https://wa.me/${store.contact.whatsapp}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="nv-btn mt-8 w-full no-underline"
+              style={{ background: "#25D366", color: "#0b3d1e" }}
+            >
+              <IconWhatsapp /> Écrire sur WhatsApp
+            </a>
 
-              {/* social */}
-              <div style={{ display: "flex", gap: 12, marginTop: 26, paddingTop: 22, borderTop: "1px solid rgba(255,255,255,.14)" }}>
-                {store.social.instagram && (
-                  <a href={store.social.instagram} target="_blank" rel="noopener noreferrer" aria-label="Instagram" style={{ width: 40, height: 40, borderRadius: 12, background: "rgba(255,255,255,.1)", border: "1px solid rgba(255,255,255,.18)", display: "flex", alignItems: "center", justifyContent: "center", color: "#fff" }}>
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8"><rect x="2" y="2" width="20" height="20" rx="5" /><circle cx="12" cy="12" r="4" /><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none" /></svg>
-                  </a>
-                )}
-                {store.social.facebook && (
-                  <a href={store.social.facebook} target="_blank" rel="noopener noreferrer" aria-label="Facebook" style={{ width: 40, height: 40, borderRadius: 12, background: "rgba(255,255,255,.1)", border: "1px solid rgba(255,255,255,.18)", display: "flex", alignItems: "center", justifyContent: "center", color: "#fff" }}>
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z" /></svg>
-                  </a>
-                )}
-              </div>
+            <div className="flex gap-3 mt-8 pt-7 border-t border-white/10">
+              {store.social.instagram && (
+                <a href={store.social.instagram} target="_blank" rel="noopener noreferrer" aria-label="Instagram" className="w-10 h-10 rounded-[4px] flex items-center justify-center transition-colors" style={{ background: "rgba(255,255,255,.08)", color: "var(--bg)" }}>
+                  <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6"><rect x="2" y="2" width="20" height="20" rx="5" /><circle cx="12" cy="12" r="4" /><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none" /></svg>
+                </a>
+              )}
+              {store.social.facebook && (
+                <a href={store.social.facebook} target="_blank" rel="noopener noreferrer" aria-label="Facebook" className="w-10 h-10 rounded-[4px] flex items-center justify-center transition-colors" style={{ background: "rgba(255,255,255,.08)", color: "var(--bg)" }}>
+                  <svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor"><path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z" /></svg>
+                </a>
+              )}
             </div>
           </Reveal>
 
           {/* Right — form */}
-          <Reveal variant="right" as="form"
-            onSubmit={handleSubmit}
-            style={{
-              background: "var(--surface)",
-              border: "1px solid var(--line)",
-              borderRadius: 28,
-              padding: "38px 34px",
-              boxShadow: "0 30px 70px -44px rgb(var(--primary-rgb) / .5)",
-            }}
-          >
-            <h2 style={{ fontFamily: "'Playfair Display'", fontWeight: 700, fontSize: 24, color: "var(--ink)", margin: "0 0 6px" }}>Envoyez-nous un message</h2>
-            <p style={{ fontFamily: "'Inter'", fontSize: 14, color: "var(--muted)", margin: "0 0 26px" }}>Les champs marqués d'une * sont obligatoires.</p>
+          <Reveal variant="right" as="form" onSubmit={handleSubmit}>
+            <h2 className="m-0 mb-1.5 text-ink" style={{ fontFamily: "'Fraunces', serif", fontWeight: 500, fontSize: 24 }}>Envoyez-nous un message</h2>
+            <p className="m-0 mb-9 text-[14px] text-[var(--muted)]">Les champs marqués d'une * sont obligatoires.</p>
 
-            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(200px,1fr))", gap: 16, marginBottom: 16 }}>
+            <div className="grid sm:grid-cols-2 gap-x-8 gap-y-7">
               <input type="text" placeholder="Nom complet *" required value={form.name} onChange={e => setForm({ ...form, name: e.target.value })} style={inputStyle} onFocus={onFocus} onBlur={onBlur} />
               <input type="email" placeholder="Adresse email *" required value={form.email} onChange={e => setForm({ ...form, email: e.target.value })} style={inputStyle} onFocus={onFocus} onBlur={onBlur} />
-            </div>
-            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(200px,1fr))", gap: 16, marginBottom: 16 }}>
               <input type="tel" placeholder="Numéro de téléphone" value={form.phone} onChange={e => setForm({ ...form, phone: e.target.value })} style={inputStyle} onFocus={onFocus} onBlur={onBlur} />
               <input type="text" placeholder="Objet *" required value={form.subject} onChange={e => setForm({ ...form, subject: e.target.value })} style={inputStyle} onFocus={onFocus} onBlur={onBlur} />
             </div>
-            <textarea placeholder="Votre message *" rows={6} required value={form.message} onChange={e => setForm({ ...form, message: e.target.value })} style={{ ...inputStyle, resize: "vertical", marginBottom: 24, lineHeight: 1.6 }} onFocus={onFocus} onBlur={onBlur} />
-            <button
-              type="submit" disabled={loading}
-              className="nv-btn"
-              style={{
-                width: "100%", padding: "17px 32px", borderRadius: 15, border: "none",
-                background: "linear-gradient(135deg,var(--secondary),var(--primary))", color: "#fff",
-                fontFamily: "'Inter'", fontWeight: 700, fontSize: 16.5,
-                cursor: loading ? "not-allowed" : "pointer",
-                opacity: loading ? 0.7 : 1,
-                boxShadow: "0 16px 34px -12px rgb(var(--primary-rgb) / .6)",
-              }}
-            >
-              {loading ? "Envoi en cours…" : "Envoyer le message →"}
+            <textarea placeholder="Votre message *" rows={5} required value={form.message} onChange={e => setForm({ ...form, message: e.target.value })} style={{ ...inputStyle, resize: "vertical", marginTop: 28, lineHeight: 1.6 }} onFocus={onFocus} onBlur={onBlur} />
+
+            <button type="submit" disabled={loading} className="nv-btn nv-btn-solid mt-10 px-10" style={{ opacity: loading ? 0.7 : 1, cursor: loading ? "not-allowed" : "pointer" }}>
+              {loading ? "Envoi en cours…" : "Envoyer le message"}
             </button>
           </Reveal>
         </div>
       </section>
-
-      <style>{`
-        @media (max-width: 820px) {
-          .contact-grid { grid-template-columns: 1fr !important; }
-        }
-      `}</style>
     </main>
   );
 }

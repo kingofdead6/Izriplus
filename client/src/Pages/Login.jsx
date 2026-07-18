@@ -87,7 +87,7 @@ export default function Login() {
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.3 }}
-            style={{ fontFamily: "'Playfair Display'", fontWeight: 700, fontSize: 42, letterSpacing: "-.01em", color: "var(--ink)", margin: 0 }}
+            style={{ fontFamily: "'Fraunces'", fontWeight: 700, fontSize: 42, letterSpacing: "-.01em", color: "var(--ink)", margin: 0 }}
           >
             {store.brand.name}<span style={{ color: "var(--secondary)" }}>.</span>
           </motion.h1>

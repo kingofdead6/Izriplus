@@ -4,14 +4,6 @@ import axios from "axios";
 import { API_BASE_URL } from "../../../api";
 import Reveal from "../Shared/Reveal";
 
-// Warm, earthy overlay tints per card — cycles if there are more categories.
-const OVERLAYS = [
-  "linear-gradient(0deg,rgba(43,25,10,.82),rgba(43,25,10,.15) 55%,transparent)",
-  "linear-gradient(0deg,rgba(60,30,15,.82),rgba(60,30,15,.12) 55%,transparent)",
-  "linear-gradient(0deg,rgba(35,35,20,.82),rgba(35,35,20,.12) 55%,transparent)",
-  "linear-gradient(0deg,rgba(50,20,20,.82),rgba(50,20,20,.12) 55%,transparent)",
-];
-
 export default function CategoriesSection() {
   const [categories, setCategories] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -27,19 +19,10 @@ export default function CategoriesSection() {
 
   if (loading) {
     return (
-      <section style={{ maxWidth: 1280, margin: "0 auto", padding: "72px 26px 30px" }}>
-        <div style={{ display: "flex", gap: 14, height: 330 }}>
-          {[...Array(4)].map((_, i) => (
-            <div
-              key={i}
-              style={{
-                flex: 1,
-                borderRadius: 24,
-                background: "var(--surface-soft)",
-                border: "1px solid var(--line)",
-                animation: "glowPulse 1.8s infinite",
-              }}
-            />
+      <section className="max-w-[1240px] mx-auto px-6 sm:px-8 py-20 md:py-28">
+        <div className="grid grid-cols-2 md:grid-cols-3 gap-5">
+          {[...Array(3)].map((_, i) => (
+            <div key={i} className="aspect-[4/5] rounded-[6px] bg-[var(--surface-soft)] border border-[var(--line)]" style={{ animation: "fadeIn .6s both" }} />
           ))}
         </div>
       </section>
@@ -49,116 +32,51 @@ export default function CategoriesSection() {
   if (!categories.length) return null;
 
   return (
-    <section style={{ maxWidth: 1280, margin: "0 auto", padding: "76px 26px 30px" }}>
-      <Reveal
-        as="div"
-        style={{
-          display: "flex",
-          alignItems: "flex-end",
-          justifyContent: "space-between",
-          gap: 20,
-          marginBottom: 32,
-          flexWrap: "wrap",
-        }}
-      >
+    <section className="max-w-[1240px] mx-auto px-6 sm:px-8 py-20 md:py-28">
+      <Reveal as="div" className="flex items-end justify-between gap-6 flex-wrap mb-12">
         <div>
-          <span className="nv-eyebrow" style={{ marginBottom: 14, display: "inline-flex" }}>
-            Nos catégories
-          </span>
-          <h2 style={{ fontFamily: "'Playfair Display'", fontWeight: 700, fontSize: "clamp(28px,4vw,46px)", letterSpacing: "-.015em", margin: "12px 0 0", color: "var(--ink)", lineHeight: 1.1 }}>
-            Une pièce pour chaque<br />coin de la maison.
+          <span className="nv-eyebrow mb-5">Nos catégories</span>
+          <h2 className="text-ink mt-5 mb-0" style={{ fontFamily: "'Fraunces', serif", fontWeight: 400, fontSize: "clamp(30px,4.2vw,50px)", lineHeight: 1.05, letterSpacing: "-0.02em" }}>
+            Une pièce pour chaque<br />coin de la maison
           </h2>
         </div>
-
-        <button
-          onClick={() => navigate("/products")}
-          className="nv-link"
-          style={{
-            fontFamily: "'Inter'",
-            fontWeight: 600,
-            color: "var(--ink)",
-            background: "none",
-            border: "none",
-            cursor: "pointer",
-            fontSize: 15,
-            display: "inline-flex",
-            alignItems: "center",
-            gap: 8,
-          }}
-        >
-          Voir toute la collection <span style={{ color: "var(--secondary)" }}>→</span>
+        <button onClick={() => navigate("/products")} className="nv-link">
+          Voir toute la collection <span className="nv-link__arrow">→</span>
         </button>
       </Reveal>
 
-      <Reveal className="nv-brand-row" variant="scale">
-        {categories.map((cat, idx) => {
-          const overlay = OVERLAYS[idx % OVERLAYS.length];
-          return (
-            <div
-              key={cat._id}
-              className="nv-brand-card nv-media"
+      <div className="grid grid-cols-2 md:grid-cols-3 gap-5">
+        {categories.map((cat, idx) => (
+          <Reveal key={cat._id} delay={idx * 80}>
+            <button
               onClick={() => navigate(`/products?category=${encodeURIComponent(cat.name)}`)}
-              style={{
-                position: "relative",
-                borderRadius: 24,
-                cursor: "pointer",
-                overflow: "hidden",
-                border: "1px solid var(--line)",
-                background: "var(--surface-soft)",
-              }}
+              className="nv-card group relative block w-full text-left p-0 cursor-pointer"
             >
-              {/* Photo layer */}
-              {cat.image?.url && (
-                <img src={cat.image.url} alt={cat.name} className="nv-brand-logo" />
-              )}
-              {/* Contrast overlay so text stays readable over any photo */}
-              <div style={{ position: "absolute", inset: 0, background: overlay, zIndex: 1 }} />
-
-              <div
-                style={{
-                  position: "relative",
-                  zIndex: 2,
-                  height: "100%",
-                  display: "flex",
-                  flexDirection: "column",
-                  justifyContent: "space-between",
-                  padding: 22,
-                }}
-              >
-                <span style={{ alignSelf: "flex-start", fontFamily: "'Inter'", fontWeight: 600, fontSize: 10.5, letterSpacing: ".1em", color: "rgba(255,255,255,.9)", textTransform: "uppercase", padding: "5px 11px", borderRadius: 999, background: "rgba(255,255,255,.14)", border: "1px solid rgba(255,255,255,.22)", backdropFilter: "blur(6px)" }}>
-                  Catégorie
-                </span>
-                <div>
-                  <h3 style={{ fontFamily: "'Playfair Display'", fontWeight: 700, fontSize: 23, margin: "0 0 6px", color: "#fff" }}>
-                    {cat.name}
-                  </h3>
-                  {cat.description && (
-                    <p
-                      style={{
-                        fontFamily: "'Inter'",
-                        fontSize: 13,
-                        color: "rgba(255,255,255,.85)",
-                        margin: "0 0 12px",
-                        lineHeight: 1.45,
-                        display: "-webkit-box",
-                        WebkitLineClamp: 2,
-                        WebkitBoxOrient: "vertical",
-                        overflow: "hidden",
-                      }}
-                    >
-                      {cat.description}
-                    </p>
-                  )}
-                  <span style={{ display: "inline-flex", alignItems: "center", gap: 7, fontFamily: "'Inter'", fontWeight: 700, fontSize: 12.5, color: "#fff", letterSpacing: ".02em" }}>
-                    Découvrir
-                    <span style={{ width: 26, height: 26, borderRadius: "50%", background: "rgba(255,255,255,.18)", border: "1px solid rgba(255,255,255,.3)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 13 }}>→</span>
-                  </span>
+              <div className="nv-media relative aspect-[4/5] bg-[var(--surface-soft)]">
+                {cat.image?.url ? (
+                  <img src={cat.image.url} alt={cat.name} className="absolute inset-0 w-full h-full object-cover" />
+                ) : (
+                  <div className="absolute inset-0 flex items-center justify-center">
+                    <svg width="56" height="56" viewBox="0 0 24 24" fill="none" stroke="var(--secondary)" strokeWidth="1.1" opacity="0.5">
+                      <path d="M5 11V7a2 2 0 012-2h10a2 2 0 012 2v4M4 11h16v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5zM6 21v-2M18 21v-2" />
+                    </svg>
+                  </div>
+                )}
+                <div className="absolute inset-0" style={{ background: "linear-gradient(0deg, rgba(20,12,4,.72), rgba(20,12,4,.06) 46%, transparent)" }} />
+                <div className="absolute inset-x-0 bottom-0 p-5">
+                  <p className="m-0 text-[10.5px] uppercase tracking-[.18em] text-white/70">Catégorie</p>
+                  <div className="flex items-center justify-between gap-3 mt-1.5">
+                    <h3 className="m-0 text-white" style={{ fontFamily: "'Fraunces', serif", fontWeight: 500, fontSize: 22, lineHeight: 1.1 }}>
+                      {cat.name}
+                    </h3>
+                    <span className="shrink-0 text-white/80 transition-transform duration-300 group-hover:translate-x-1">→</span>
+                  </div>
                 </div>
               </div>
-            </div>
-          );
-        })}
-      </Reveal>
+            </button>
+          </Reveal>
+        ))}
+      </div>
     </section>
   );
 }

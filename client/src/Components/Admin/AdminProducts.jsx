@@ -12,7 +12,7 @@ const S = {
   page: { minHeight: "100vh", padding: "56px 24px 80px" },
   inner: { maxWidth: 1280, margin: "0 auto" },
   header: { display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 36, flexWrap: "wrap", gap: 16 },
-  h1: { fontFamily: "'Playfair Display'", fontWeight: 700, fontSize: "clamp(28px,4vw,52px)", color: "var(--ink)", margin: 0, letterSpacing: "-.02em" },
+  h1: { fontFamily: "'Fraunces'", fontWeight: 700, fontSize: "clamp(28px,4vw,52px)", color: "var(--ink)", margin: 0, letterSpacing: "-.02em" },
   addBtn: { display: "flex", alignItems: "center", gap: 9, padding: "13px 24px", background: "linear-gradient(135deg,var(--secondary),var(--primary))", color: "#fff", border: "none", borderRadius: 14, fontFamily: "'Inter'", fontWeight: 700, fontSize: 15, cursor: "pointer", boxShadow: "0 4px 20px rgb(var(--primary-rgb) / .35)", whiteSpace: "nowrap" },
   toolbar: { display: "flex", flexWrap: "wrap", gap: 12, marginBottom: 36 },
   searchWrap: { position: "relative", flex: "1 1 220px" },
@@ -24,8 +24,8 @@ const S = {
   cardImg: { width: "100%", aspectRatio: "1/1", objectFit: "cover", display: "block", background: "rgb(var(--secondary-rgb) / .07)" },
   cardBody: { padding: "14px 16px 16px" },
   catLabel: { fontSize: 11, color: "#6D28D9", fontFamily: "'Inter'", margin: "0 0 4px", fontWeight: 600 },
-  cardName: { fontFamily: "'Playfair Display'", fontWeight: 700, fontSize: 15, color: "var(--ink)", margin: 0, lineHeight: 1.3 },
-  price: { fontFamily: "'Playfair Display'", fontWeight: 700, fontSize: 18, color: "var(--ink)", marginTop: 8, marginBottom: 0 },
+  cardName: { fontFamily: "'Fraunces'", fontWeight: 700, fontSize: 15, color: "var(--ink)", margin: 0, lineHeight: 1.3 },
+  price: { fontFamily: "'Fraunces'", fontWeight: 700, fontSize: 18, color: "var(--ink)", marginTop: 8, marginBottom: 0 },
   muted: { fontSize: 12, color: "var(--muted)", marginTop: 2 },
   actionRow: { display: "flex", gap: 8, marginTop: 12 },
   editBtn: { flex: 1, display: "flex", alignItems: "center", justifyContent: "center", gap: 5, padding: "9px", background: "rgb(var(--secondary-rgb) / .15)", border: "1px solid rgb(var(--secondary-rgb) / .3)", color: "var(--primary)", borderRadius: 10, fontSize: 13, fontWeight: 600, cursor: "pointer" },
@@ -33,7 +33,7 @@ const S = {
   overlay: { position: "fixed", inset: 0, background: "rgba(43,33,24,.45)", zIndex: 50, display: "flex", alignItems: "center", justifyContent: "center", padding: "16px" },
   modal: { background: "var(--surface)", border: "1px solid var(--line)", borderRadius: 24, width: "100%", maxWidth: 560, maxHeight: "85vh", display: "flex", flexDirection: "column", boxShadow: "0 24px 80px rgba(43,33,24,.22)" },
   modalHeader: { padding: "24px 28px 20px", display: "flex", justifyContent: "space-between", alignItems: "center", borderBottom: "1px solid var(--line)" },
-  modalTitle: { fontFamily: "'Playfair Display'", fontWeight: 700, fontSize: 22, color: "var(--ink)", margin: 0 },
+  modalTitle: { fontFamily: "'Fraunces'", fontWeight: 700, fontSize: 22, color: "var(--ink)", margin: 0 },
   closeBtn: { background: "var(--surface-soft)", border: "1px solid var(--line)", color: "var(--muted)", borderRadius: 10, padding: 6, cursor: "pointer", display: "flex" },
   formScroll: { overflowY: "auto", padding: "24px 28px", display: "flex", flexDirection: "column", gap: 14 },
   input: { padding: "14px 16px", background: "var(--surface-soft)", border: "1px solid var(--line)", borderRadius: 12, color: "var(--ink)", fontSize: 15, outline: "none", fontFamily: "inherit", width: "100%", boxSizing: "border-box" },
@@ -49,7 +49,7 @@ const S = {
   submitBtn: { flex: 1, padding: "15px", background: "linear-gradient(135deg,var(--secondary),var(--primary))", color: "#fff", border: "none", borderRadius: 12, fontFamily: "'Inter'", fontWeight: 700, fontSize: 16, cursor: "pointer" },
   cancelBtn: { flex: 1, padding: "15px", background: "var(--surface-soft)", border: "1px solid var(--line)", color: "var(--muted)", borderRadius: 12, fontFamily: "'Inter'", fontWeight: 700, fontSize: 16, cursor: "pointer" },
   sectionLabel: { fontSize: 12, color: "var(--muted)", fontFamily: "'Inter'", fontWeight: 600, textTransform: "uppercase", letterSpacing: ".06em", marginBottom: 8, display: "block" },
-  empty: { textAlign: "center", color: "var(--muted)", fontSize: 20, paddingTop: 80, fontFamily: "'Playfair Display'" },
+  empty: { textAlign: "center", color: "var(--muted)", fontSize: 20, paddingTop: 80, fontFamily: "'Fraunces'" },
 };
 
 export default function AdminProducts() {
