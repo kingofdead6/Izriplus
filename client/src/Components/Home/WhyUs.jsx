@@ -1,4 +1,5 @@
 import { store } from "../../store.config.js";
+import Reveal from "../Shared/Reveal";
 
 const IconCraft = () => (
   <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round">
@@ -32,33 +33,37 @@ const FEATURES = [
 
 export default function WhyUs() {
   return (
-    <section style={{ maxWidth: 1280, margin: "0 auto", padding: "64px 26px 30px" }}>
-      <div style={{ textAlign: "center", marginBottom: 42 }}>
-        <p style={{ fontFamily: "'Inter'", fontWeight: 700, fontSize: 12.5, letterSpacing: ".12em", color: "var(--secondary)", margin: "0 0 10px", textTransform: "uppercase" }}>Pourquoi {store.brand.name}</p>
-        <h2 style={{ fontFamily: "'Playfair Display'", fontWeight: 700, fontSize: "clamp(28px,4vw,44px)", letterSpacing: "-.01em", margin: 0, color: "var(--ink)" }}>Une maison de confiance.</h2>
-      </div>
-      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(230px,1fr))", gap: 18 }}>
+    <section style={{ maxWidth: 1280, margin: "0 auto", padding: "76px 26px 40px" }}>
+      <Reveal as="div" style={{ textAlign: "center", marginBottom: 20 }}>
+        <span className="nv-eyebrow nv-eyebrow--center" style={{ display: "inline-flex", marginBottom: 14 }}>
+          Pourquoi {store.brand.name}
+        </span>
+        <h2 style={{ fontFamily: "'Playfair Display'", fontWeight: 700, fontSize: "clamp(28px,4vw,46px)", letterSpacing: "-.015em", margin: "12px 0 22px", color: "var(--ink)", lineHeight: 1.1 }}>
+          Une maison de confiance.
+        </h2>
+        <div className="nv-divider"><span className="nv-diamond" /></div>
+      </Reveal>
+
+      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(230px,1fr))", gap: 20, marginTop: 42 }}>
         {FEATURES.map((f, i) => (
-          <div
-            key={f.title}
-            style={{
-              position: "relative", borderRadius: 18, padding: "28px 24px",
-              border: "1px solid var(--line)",
-              background: "var(--surface)",
-              overflow: "hidden",
-              animation: `fadeUp .6s both`,
-              animationDelay: `${i * 0.08}s`,
-              transition: "transform .3s,border-color .3s",
-            }}
-            onMouseEnter={e => { e.currentTarget.style.transform = "translateY(-5px)"; e.currentTarget.style.borderColor = "rgb(var(--secondary-rgb) / .4)"; }}
-            onMouseLeave={e => { e.currentTarget.style.transform = "translateY(0)"; e.currentTarget.style.borderColor = "var(--line)"; }}
-          >
-            <div style={{ width: 52, height: 52, borderRadius: 14, display: "flex", alignItems: "center", justifyContent: "center", background: "rgb(var(--secondary-rgb) / .1)", border: "1px solid rgb(var(--secondary-rgb) / .25)", marginBottom: 18 }}>
-              <f.Icon />
+          <Reveal key={f.title} delay={i * 90} style={{ height: "100%" }}>
+            <div
+              className="nv-rise"
+              style={{
+                position: "relative", borderRadius: 20, padding: "30px 26px",
+                border: "1px solid var(--line)",
+                background: "var(--surface)",
+                overflow: "hidden",
+                height: "100%",
+              }}
+            >
+              <div style={{ width: 56, height: 56, borderRadius: 16, display: "flex", alignItems: "center", justifyContent: "center", background: "linear-gradient(150deg, rgb(var(--secondary-rgb) / .16), rgb(var(--accent-rgb) / .1))", border: "1px solid rgb(var(--secondary-rgb) / .22)", marginBottom: 20 }}>
+                <f.Icon />
+              </div>
+              <h3 style={{ fontFamily: "'Playfair Display'", fontWeight: 700, fontSize: 18.5, margin: "0 0 8px", color: "var(--ink)" }}>{f.title}</h3>
+              <p style={{ fontSize: 14.5, lineHeight: 1.6, color: "var(--muted)", margin: 0 }}>{f.desc}</p>
             </div>
-            <h3 style={{ fontFamily: "'Playfair Display'", fontWeight: 700, fontSize: 18, margin: "0 0 8px", color: "var(--ink)" }}>{f.title}</h3>
-            <p style={{ fontSize: 14.5, lineHeight: 1.55, color: "var(--muted)", margin: 0 }}>{f.desc}</p>
-          </div>
+          </Reveal>
         ))}
       </div>
     </section>

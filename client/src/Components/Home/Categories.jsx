@@ -2,13 +2,14 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { API_BASE_URL } from "../../../api";
+import Reveal from "../Shared/Reveal";
 
 // Warm, earthy overlay tints per card — cycles if there are more categories.
 const OVERLAYS = [
-  "linear-gradient(0deg,rgba(43,25,10,.78),rgba(43,25,10,.12) 55%,transparent)",
-  "linear-gradient(0deg,rgba(60,30,15,.78),rgba(60,30,15,.1) 55%,transparent)",
-  "linear-gradient(0deg,rgba(35,35,20,.78),rgba(35,35,20,.1) 55%,transparent)",
-  "linear-gradient(0deg,rgba(50,20,20,.78),rgba(50,20,20,.1) 55%,transparent)",
+  "linear-gradient(0deg,rgba(43,25,10,.82),rgba(43,25,10,.15) 55%,transparent)",
+  "linear-gradient(0deg,rgba(60,30,15,.82),rgba(60,30,15,.12) 55%,transparent)",
+  "linear-gradient(0deg,rgba(35,35,20,.82),rgba(35,35,20,.12) 55%,transparent)",
+  "linear-gradient(0deg,rgba(50,20,20,.82),rgba(50,20,20,.12) 55%,transparent)",
 ];
 
 export default function CategoriesSection() {
@@ -26,7 +27,7 @@ export default function CategoriesSection() {
 
   if (loading) {
     return (
-      <section style={{ maxWidth: 1280, margin: "0 auto", padding: "60px 26px 30px" }}>
+      <section style={{ maxWidth: 1280, margin: "0 auto", padding: "72px 26px 30px" }}>
         <div style={{ display: "flex", gap: 14, height: 330 }}>
           {[...Array(4)].map((_, i) => (
             <div
@@ -48,52 +49,54 @@ export default function CategoriesSection() {
   if (!categories.length) return null;
 
   return (
-    <section style={{ maxWidth: 1280, margin: "0 auto", padding: "60px 26px 30px" }}>
-      <div
+    <section style={{ maxWidth: 1280, margin: "0 auto", padding: "76px 26px 30px" }}>
+      <Reveal
+        as="div"
         style={{
           display: "flex",
           alignItems: "flex-end",
           justifyContent: "space-between",
           gap: 20,
-          marginBottom: 30,
+          marginBottom: 32,
           flexWrap: "wrap",
         }}
       >
         <div>
-          <p style={{ fontFamily: "'Inter'", fontWeight: 700, fontSize: 12.5, letterSpacing: ".12em", color: "var(--secondary)", margin: "0 0 10px", textTransform: "uppercase" }}>
+          <span className="nv-eyebrow" style={{ marginBottom: 14, display: "inline-flex" }}>
             Nos catégories
-          </p>
-          <h2 style={{ fontFamily: "'Playfair Display'", fontWeight: 700, fontSize: "clamp(28px,4vw,44px)", letterSpacing: "-.01em", margin: 0, color: "var(--ink)" }}>
-            Une pièce pour chaque coin de la maison.
+          </span>
+          <h2 style={{ fontFamily: "'Playfair Display'", fontWeight: 700, fontSize: "clamp(28px,4vw,46px)", letterSpacing: "-.015em", margin: "12px 0 0", color: "var(--ink)", lineHeight: 1.1 }}>
+            Une pièce pour chaque<br />coin de la maison.
           </h2>
         </div>
 
         <button
           onClick={() => navigate("/products")}
+          className="nv-link"
           style={{
             fontFamily: "'Inter'",
             fontWeight: 600,
-            color: "var(--muted)",
+            color: "var(--ink)",
             background: "none",
             border: "none",
             cursor: "pointer",
             fontSize: 15,
-            transition: "color .25s",
+            display: "inline-flex",
+            alignItems: "center",
+            gap: 8,
           }}
-          onMouseEnter={(e) => (e.currentTarget.style.color = "var(--ink)")}
-          onMouseLeave={(e) => (e.currentTarget.style.color = "var(--muted)")}
         >
-          Voir tout
+          Voir toute la collection <span style={{ color: "var(--secondary)" }}>→</span>
         </button>
-      </div>
+      </Reveal>
 
-      <div className="nv-brand-row">
+      <Reveal className="nv-brand-row" variant="scale">
         {categories.map((cat, idx) => {
           const overlay = OVERLAYS[idx % OVERLAYS.length];
           return (
             <div
               key={cat._id}
-              className="nv-brand-card"
+              className="nv-brand-card nv-media"
               onClick={() => navigate(`/products?category=${encodeURIComponent(cat.name)}`)}
               style={{
                 position: "relative",
@@ -122,11 +125,11 @@ export default function CategoriesSection() {
                   padding: 22,
                 }}
               >
-                <span style={{ fontFamily: "'Inter'", fontWeight: 600, fontSize: 11, letterSpacing: ".08em", color: "rgba(255,255,255,.75)", textTransform: "uppercase" }}>
+                <span style={{ alignSelf: "flex-start", fontFamily: "'Inter'", fontWeight: 600, fontSize: 10.5, letterSpacing: ".1em", color: "rgba(255,255,255,.9)", textTransform: "uppercase", padding: "5px 11px", borderRadius: 999, background: "rgba(255,255,255,.14)", border: "1px solid rgba(255,255,255,.22)", backdropFilter: "blur(6px)" }}>
                   Catégorie
                 </span>
                 <div>
-                  <h3 style={{ fontFamily: "'Playfair Display'", fontWeight: 700, fontSize: 22, margin: "0 0 6px", color: "#fff" }}>
+                  <h3 style={{ fontFamily: "'Playfair Display'", fontWeight: 700, fontSize: 23, margin: "0 0 6px", color: "#fff" }}>
                     {cat.name}
                   </h3>
                   {cat.description && (
@@ -134,9 +137,9 @@ export default function CategoriesSection() {
                       style={{
                         fontFamily: "'Inter'",
                         fontSize: 13,
-                        color: "rgba(255,255,255,.82)",
-                        margin: 0,
-                        lineHeight: 1.4,
+                        color: "rgba(255,255,255,.85)",
+                        margin: "0 0 12px",
+                        lineHeight: 1.45,
                         display: "-webkit-box",
                         WebkitLineClamp: 2,
                         WebkitBoxOrient: "vertical",
@@ -146,12 +149,16 @@ export default function CategoriesSection() {
                       {cat.description}
                     </p>
                   )}
+                  <span style={{ display: "inline-flex", alignItems: "center", gap: 7, fontFamily: "'Inter'", fontWeight: 700, fontSize: 12.5, color: "#fff", letterSpacing: ".02em" }}>
+                    Découvrir
+                    <span style={{ width: 26, height: 26, borderRadius: "50%", background: "rgba(255,255,255,.18)", border: "1px solid rgba(255,255,255,.3)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 13 }}>→</span>
+                  </span>
                 </div>
               </div>
             </div>
           );
         })}
-      </div>
+      </Reveal>
     </section>
   );
 }

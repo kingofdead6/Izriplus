@@ -158,6 +158,216 @@ body {
   filter: saturate(1);
 }
 
+/* ═══════════════════════════════════════════════════════════════════════════
+   ELEGANT DESIGN SYSTEM
+   Layered ambient background, scroll-reveals, gradient type, premium buttons,
+   ornamental dividers and refined card interactions. All warm-palette, all
+   driven by the same brand CSS variables so store.config.js stays the one knob.
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+/* ── Ambient aurora background (referenced by App.jsx) ── */
+.nv-aurora-bg {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  overflow: hidden;
+  background:
+    radial-gradient(1200px 700px at 78% -8%, rgb(var(--accent-rgb) / .10), transparent 60%),
+    radial-gradient(900px 620px at 8% 12%, rgb(var(--secondary-rgb) / .10), transparent 62%),
+    var(--bg);
+}
+.nv-aurora-a,
+.nv-aurora-b,
+.nv-aurora-c {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(90px);
+  opacity: .55;
+  will-change: transform;
+}
+.nv-aurora-a {
+  width: 46vw; height: 46vw; top: -12vw; left: -8vw;
+  background: radial-gradient(circle, rgb(var(--secondary-rgb) / .30), transparent 68%);
+  animation: auroraDrift 24s ease-in-out infinite;
+}
+.nv-aurora-b {
+  width: 42vw; height: 42vw; top: 28vh; right: -12vw;
+  background: radial-gradient(circle, rgb(var(--accent-rgb) / .26), transparent 66%);
+  animation: auroraDrift 30s ease-in-out infinite reverse;
+}
+.nv-aurora-c {
+  width: 40vw; height: 40vw; bottom: -16vw; left: 26vw;
+  background: radial-gradient(circle, rgb(var(--primary-rgb) / .18), transparent 68%);
+  animation: auroraDrift 27s ease-in-out infinite 2s;
+}
+
+/* Fine paper grain over the whole page for a crafted, tactile feel */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  opacity: .5;
+  mix-blend-mode: multiply;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");
+}
+
+/* ── Additional keyframes ── */
+@keyframes auroraDrift {
+  0%,100% { transform: translate(0,0) scale(1); }
+  33%     { transform: translate(4vw,-3vh) scale(1.08); }
+  66%     { transform: translate(-3vw,4vh) scale(.96); }
+}
+@keyframes gradientPan { to { background-position: 200% center; } }
+@keyframes marquee    { to { transform: translateX(-50%); } }
+@keyframes kenBurns {
+  0%   { transform: scale(1) translate(0,0); }
+  100% { transform: scale(1.09) translate(-1.5%,-1.5%); }
+}
+@keyframes spinSlow   { to { transform: rotate(360deg); } }
+@keyframes sheenSweep { to { transform: translateX(160%) skewX(-18deg); } }
+@keyframes revealUp {
+  from { opacity: 0; transform: translateY(26px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ── Scroll reveal (toggled by IntersectionObserver in Reveal.jsx) ── */
+.nv-reveal {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity .85s cubic-bezier(.2,.7,.2,1), transform .85s cubic-bezier(.2,.7,.2,1);
+  will-change: opacity, transform;
+}
+.nv-reveal.is-visible { opacity: 1; transform: none; }
+.nv-reveal-scale { transform: translateY(24px) scale(.965); }
+.nv-reveal-left  { transform: translateX(-32px); }
+.nv-reveal-right { transform: translateX(32px); }
+
+/* ── Gradient / shimmering type ── */
+.nv-gradient-text {
+  background: linear-gradient(110deg, var(--secondary), var(--accent) 45%, var(--secondary));
+  background-size: 220% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: gradientPan 7s linear infinite;
+}
+
+/* ── Section eyebrow with lead rule ── */
+.nv-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  font-family: 'Inter', sans-serif;
+  font-weight: 700;
+  font-size: 12px;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  color: var(--secondary);
+}
+.nv-eyebrow::before {
+  content: "";
+  width: 30px;
+  height: 1.5px;
+  background: linear-gradient(90deg, transparent, var(--secondary));
+  border-radius: 2px;
+}
+.nv-eyebrow--center::after {
+  content: "";
+  width: 30px;
+  height: 1.5px;
+  background: linear-gradient(90deg, var(--secondary), transparent);
+  border-radius: 2px;
+}
+
+/* ── Ornamental divider ── */
+.nv-divider { display: flex; align-items: center; justify-content: center; gap: 16px; }
+.nv-divider::before,
+.nv-divider::after {
+  content: "";
+  height: 1px;
+  width: min(140px, 24vw);
+  background: linear-gradient(90deg, transparent, rgb(var(--accent-rgb) / .55));
+}
+.nv-divider::after { background: linear-gradient(90deg, rgb(var(--accent-rgb) / .55), transparent); }
+.nv-diamond {
+  width: 9px; height: 9px;
+  transform: rotate(45deg);
+  background: linear-gradient(135deg, var(--secondary), var(--accent));
+  border-radius: 2px;
+  box-shadow: 0 0 0 4px rgb(var(--accent-rgb) / .12);
+}
+
+/* ── Premium primary button (light sheen sweep on hover) ── */
+.nv-btn {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+  transition: transform .25s cubic-bezier(.2,.9,.3,1), box-shadow .3s;
+}
+.nv-btn::after {
+  content: "";
+  position: absolute;
+  top: 0; left: 0;
+  width: 45%; height: 100%;
+  background: linear-gradient(100deg, transparent, rgba(255,255,255,.4), transparent);
+  transform: translateX(-160%) skewX(-18deg);
+  z-index: -1;
+}
+.nv-btn:hover { transform: translateY(-2px); }
+.nv-btn:hover::after { animation: sheenSweep .8s ease; }
+.nv-btn:active { transform: translateY(0); }
+
+/* ── Animated underline link ── */
+.nv-link { position: relative; }
+.nv-link::after {
+  content: "";
+  position: absolute;
+  left: 0; bottom: -3px;
+  height: 1.5px; width: 100%;
+  background: currentColor;
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform .4s cubic-bezier(.2,.7,.2,1);
+}
+.nv-link:hover::after { transform: scaleX(1); transform-origin: left; }
+
+/* ── Elevate-on-hover card ── */
+.nv-rise { transition: transform .4s cubic-bezier(.2,.9,.3,1), box-shadow .4s, border-color .4s; }
+.nv-rise:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 34px 60px -30px rgb(var(--primary-rgb) / .4);
+  border-color: rgb(var(--secondary-rgb) / .45);
+}
+
+/* ── Media zoom wrapper (product / category photos) ── */
+.nv-media { overflow: hidden; }
+.nv-media img { transition: transform .7s cubic-bezier(.2,.9,.3,1); }
+.nv-rise:hover .nv-media img,
+.nv-media:hover img { transform: scale(1.07); }
+
+/* ── Marquee trust strip ── */
+.nv-marquee { display: flex; overflow: hidden; -webkit-mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent); mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent); }
+.nv-marquee__track { display: flex; align-items: center; gap: 54px; white-space: nowrap; animation: marquee 30s linear infinite; }
+.nv-marquee:hover .nv-marquee__track { animation-play-state: paused; }
+
+/* ── Ken Burns for the hero photo ── */
+.nv-kenburns { animation: kenBurns 16s ease-in-out infinite alternate; }
+
+/* ── Decorative slow-spinning ring ── */
+.nv-spin-slow { animation: spinSlow 26s linear infinite; }
+
+/* ── Frosted glass panel ── */
+.nv-glass {
+  background: rgba(255,255,255,.62);
+  backdrop-filter: blur(16px) saturate(1.2);
+  -webkit-backdrop-filter: blur(16px) saturate(1.2);
+  border: 1px solid rgba(255,255,255,.7);
+  box-shadow: 0 24px 60px -34px rgb(var(--primary-rgb) / .35);
+}
+
 /* ── Mobile responsive ── */
 @media (max-width: 860px) {
   .nv-hero-row { flex-direction: column !important; }
@@ -166,4 +376,12 @@ body {
 }
 @media (max-width: 640px) {
   .nv-brand-card { width: 100% !important; }
+}
+
+/* ── Respect reduced-motion preferences ── */
+@media (prefers-reduced-motion: reduce) {
+  .nv-aurora-a, .nv-aurora-b, .nv-aurora-c,
+  .nv-gradient-text, .nv-kenburns, .nv-spin-slow,
+  .nv-marquee__track { animation: none !important; }
+  .nv-reveal { opacity: 1 !important; transform: none !important; transition: none !important; }
 }

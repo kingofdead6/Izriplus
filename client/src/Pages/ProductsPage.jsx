@@ -3,6 +3,7 @@ import { useNavigate, useSearchParams } from "react-router-dom";
 import axios from "axios";
 import { API_BASE_URL } from "../../api";
 import { toast } from "react-toastify";
+import Reveal from "../Components/Shared/Reveal";
 
 // Simple line-art armchair — shown when a product has no photo yet.
 const PlaceholderIcon = () => (
@@ -21,60 +22,63 @@ function ProductCard({ item, index, onClick }) {
     const card = cardRef.current;
     if (!card) return;
     const rect = card.getBoundingClientRect();
-    const rx = ((e.clientY - rect.top) / rect.height - 0.5) * -6;
-    const ry = ((e.clientX - rect.left) / rect.width - 0.5) * 6;
-    card.style.transform = `perspective(900px) rotateX(${rx}deg) rotateY(${ry}deg)`;
+    const rx = ((e.clientY - rect.top) / rect.height - 0.5) * -5;
+    const ry = ((e.clientX - rect.left) / rect.width - 0.5) * 5;
+    card.style.transform = `perspective(900px) rotateX(${rx}deg) rotateY(${ry}deg) translateY(-6px)`;
+    card.style.boxShadow = "0 34px 60px -28px rgb(var(--primary-rgb) / .38)";
   };
 
   const onMouseLeave = () => {
     const card = cardRef.current;
     if (!card) return;
-    card.style.transform = "perspective(900px) rotateX(0) rotateY(0)";
+    card.style.transform = "perspective(900px) rotateX(0) rotateY(0) translateY(0)";
+    card.style.boxShadow = "0 1px 3px rgba(43,33,24,.05)";
   };
 
   return (
-    <div
-      ref={cardRef}
-      onMouseMove={onMouseMove}
-      onMouseLeave={onMouseLeave}
-      style={{
-        position: "relative", borderRadius: 20, overflow: "hidden",
-        border: "1px solid var(--line)",
-        background: "var(--surface)",
-        transition: "box-shadow .3s",
-        transformStyle: "preserve-3d",
-        animation: "fadeUp .55s both",
-        animationDelay: `${index * 0.05}s`,
-      }}
-      onMouseEnter={e => (e.currentTarget.style.boxShadow = "0 30px 54px -26px rgb(var(--primary-rgb) / .3)")}
-      onMouseLeaveCapture={e => (e.currentTarget.style.boxShadow = "none")}
-    >
-      <div onClick={onClick} style={{ position: "relative", height: 210, display: "flex", alignItems: "center", justifyContent: "center", background: "var(--surface-soft)", overflow: "hidden", cursor: "pointer" }}>
-        {item.images?.[0]?.url ? (
-          <img src={item.images[0].url} alt={item.name} style={{ width: "100%", height: "100%", objectFit: "cover", transform: "translateZ(20px)" }} />
-        ) : (
-          <div style={{ transform: "translateZ(20px)" }}><PlaceholderIcon /></div>
-        )}
-      </div>
+    <Reveal delay={(index % 8) * 55} style={{ height: "100%" }}>
+      <div
+        ref={cardRef}
+        onMouseMove={onMouseMove}
+        onMouseLeave={onMouseLeave}
+        style={{
+          position: "relative", borderRadius: 22, overflow: "hidden",
+          border: "1px solid var(--line)",
+          background: "var(--surface)",
+          transition: "transform .35s cubic-bezier(.2,.9,.3,1), box-shadow .35s",
+          transformStyle: "preserve-3d",
+          boxShadow: "0 1px 3px rgba(43,33,24,.05)",
+          height: "100%",
+        }}
+      >
+        <div onClick={onClick} className="nv-media" style={{ position: "relative", height: 220, display: "flex", alignItems: "center", justifyContent: "center", background: "var(--surface-soft)", overflow: "hidden", cursor: "pointer" }}>
+          {item.images?.[0]?.url ? (
+            <img src={item.images[0].url} alt={item.name} style={{ width: "100%", height: "100%", objectFit: "cover" }} />
+          ) : (
+            <PlaceholderIcon />
+          )}
+          <div style={{ position: "absolute", inset: 0, background: "linear-gradient(0deg,rgba(43,25,10,.16),transparent 42%)", pointerEvents: "none" }} />
+        </div>
 
-      <div style={{ position: "relative", zIndex: 4, padding: 18 }}>
-        <p style={{ fontFamily: "'Inter'", fontSize: 11, color: "var(--secondary)", margin: "0 0 5px", letterSpacing: ".04em", fontWeight: 600, textTransform: "uppercase" }}>
-          {item.category?.name || "Meuble"}
-        </p>
-        <h3 style={{ fontFamily: "'Playfair Display'", fontWeight: 700, fontSize: 17, margin: "0 0 4px", lineHeight: 1.25, color: "var(--ink)" }}>{item.name}</h3>
-        <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: 8 }}>
-          <span style={{ fontFamily: "'Playfair Display'", fontWeight: 700, fontSize: 18, color: "var(--ink)" }}>{(item.price || 0).toLocaleString()} DA</span>
-          <button
-            onClick={onClick}
-            style={{ fontFamily: "'Inter'", fontWeight: 600, fontSize: 13, padding: "9px 14px", borderRadius: 11, border: "1px solid rgb(var(--secondary-rgb) / .35)", background: "rgb(var(--secondary-rgb) / .08)", color: "var(--primary)", cursor: "pointer", transition: "all .25s" }}
-            onMouseEnter={e => { e.currentTarget.style.background = "var(--secondary)"; e.currentTarget.style.color = "#fff"; }}
-            onMouseLeave={e => { e.currentTarget.style.background = "rgb(var(--secondary-rgb) / .08)"; e.currentTarget.style.color = "var(--primary)"; }}
-          >
-            Voir détails
-          </button>
+        <div style={{ position: "relative", zIndex: 4, padding: 18 }}>
+          <p style={{ fontFamily: "'Inter'", fontSize: 11, color: "var(--secondary)", margin: "0 0 5px", letterSpacing: ".05em", fontWeight: 600, textTransform: "uppercase" }}>
+            {item.category?.name || "Meuble"}
+          </p>
+          <h3 style={{ fontFamily: "'Playfair Display'", fontWeight: 700, fontSize: 17.5, margin: "0 0 12px", lineHeight: 1.25, color: "var(--ink)" }}>{item.name}</h3>
+          <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: 8 }}>
+            <span style={{ fontFamily: "'Playfair Display'", fontWeight: 700, fontSize: 19, color: "var(--ink)" }}>{(item.price || 0).toLocaleString()} DA</span>
+            <button
+              onClick={onClick}
+              style={{ fontFamily: "'Inter'", fontWeight: 600, fontSize: 13, padding: "9px 15px", borderRadius: 11, border: "1px solid rgb(var(--secondary-rgb) / .35)", background: "rgb(var(--secondary-rgb) / .08)", color: "var(--primary)", cursor: "pointer", transition: "all .25s" }}
+              onMouseEnter={e => { e.currentTarget.style.background = "var(--secondary)"; e.currentTarget.style.color = "#fff"; }}
+              onMouseLeave={e => { e.currentTarget.style.background = "rgb(var(--secondary-rgb) / .08)"; e.currentTarget.style.color = "var(--primary)"; }}
+            >
+              Voir détails
+            </button>
+          </div>
         </div>
       </div>
-    </div>
+    </Reveal>
   );
 }
 
@@ -131,37 +135,49 @@ export default function ProductsPage() {
 
   if (loading) {
     return (
-      <div style={{ minHeight: "100vh", display: "flex", alignItems: "center", justifyContent: "center" }}>
-        <p style={{ fontFamily: "'Playfair Display'", fontSize: 22, color: "var(--secondary)", animation: "glowPulse 1.5s infinite" }}>
-          Chargement des meubles…
-        </p>
+      <div style={{ maxWidth: 1280, margin: "0 auto", padding: "60px 26px" }}>
+        <div style={{ width: 180, height: 16, borderRadius: 8, background: "var(--surface-soft)", marginBottom: 14, animation: "glowPulse 1.6s infinite" }} />
+        <div style={{ width: 320, height: 44, borderRadius: 12, background: "var(--surface-soft)", marginBottom: 36, animation: "glowPulse 1.6s infinite" }} />
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill,minmax(258px,1fr))", gap: 18 }}>
+          {[...Array(8)].map((_, i) => (
+            <div key={i} style={{ borderRadius: 22, overflow: "hidden", border: "1px solid var(--line)", background: "var(--surface)" }}>
+              <div style={{ height: 220, background: "var(--surface-soft)", animation: "glowPulse 1.6s infinite" }} />
+              <div style={{ padding: 18 }}>
+                <div style={{ width: "60%", height: 12, borderRadius: 6, background: "var(--surface-soft)", marginBottom: 12, animation: "glowPulse 1.6s infinite" }} />
+                <div style={{ width: "85%", height: 16, borderRadius: 6, background: "var(--surface-soft)", animation: "glowPulse 1.6s infinite" }} />
+              </div>
+            </div>
+          ))}
+        </div>
       </div>
     );
   }
 
   return (
-    <div style={{ animation: "fadeIn .5s", maxWidth: 1280, margin: "0 auto", padding: "50px 26px 60px" }}>
+    <div style={{ animation: "fadeIn .5s", maxWidth: 1280, margin: "0 auto", padding: "56px 26px 70px" }}>
       {/* Header */}
-      <div style={{ animation: "fadeUp .6s both", marginBottom: 30 }}>
-        <p style={{ fontFamily: "'Inter'", fontWeight: 700, fontSize: 12.5, letterSpacing: ".12em", color: "var(--secondary)", margin: "0 0 10px", textTransform: "uppercase" }}>
-          {filtered.length} meuble{filtered.length > 1 ? "s" : ""}
-        </p>
-        <h1 style={{ fontFamily: "'Playfair Display'", fontWeight: 700, fontSize: "clamp(32px,5vw,54px)", letterSpacing: "-.01em", margin: 0, color: "var(--ink)" }}>
-          Nos Meubles
+      <Reveal as="div" style={{ marginBottom: 34, textAlign: "center", maxWidth: 720, marginInline: "auto" }}>
+        <span className="nv-eyebrow nv-eyebrow--center" style={{ display: "inline-flex", marginBottom: 14 }}>
+          {filtered.length} meuble{filtered.length > 1 ? "s" : ""} disponible{filtered.length > 1 ? "s" : ""}
+        </span>
+        <h1 style={{ fontFamily: "'Playfair Display'", fontWeight: 700, fontSize: "clamp(34px,5.4vw,58px)", letterSpacing: "-.02em", margin: "12px 0 16px", color: "var(--ink)", lineHeight: 1.06 }}>
+          Notre <span className="nv-gradient-text italic">collection</span>
         </h1>
-      </div>
+        <p style={{ fontFamily: "'Inter'", fontSize: 16, color: "var(--muted)", margin: 0, lineHeight: 1.65 }}>
+          Salon, chambre, salle à manger et décoration — fabriqués en Algérie, livrés chez vous.
+        </p>
+      </Reveal>
 
       {/* Sticky filter bar */}
-      <div style={{
-        position: "sticky", top: 72, zIndex: 40,
-        background: "rgba(247,241,232,.92)", backdropFilter: "blur(14px)",
-        border: "1px solid var(--line)", borderRadius: 18,
-        padding: 14, marginBottom: 28,
+      <div className="nv-glass" style={{
+        position: "sticky", top: 78, zIndex: 40,
+        borderRadius: 18,
+        padding: 14, marginBottom: 30,
         display: "flex", flexDirection: "column", gap: 13,
       }}>
         {/* Search */}
         <div style={{ display: "flex", alignItems: "center", gap: 11, background: "var(--surface)", border: "1px solid var(--line)", borderRadius: 13, padding: "11px 15px" }}>
-          <span style={{ color: "var(--muted)", fontSize: 17 }}>⌕</span>
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="var(--muted)" strokeWidth="2" strokeLinecap="round"><circle cx="11" cy="11" r="7" /><path d="M21 21l-4.3-4.3" /></svg>
           <input
             value={search}
             onChange={e => setSearch(e.target.value)}
@@ -188,10 +204,11 @@ export default function ProductsPage() {
                 onClick={() => setCategory(cat)}
                 style={{
                   fontFamily: "'Inter'", fontWeight: 600, fontSize: 13.5,
-                  padding: "8px 15px", borderRadius: 11, cursor: "pointer", transition: "all .25s",
+                  padding: "8px 16px", borderRadius: 999, cursor: "pointer", transition: "all .25s",
                   color: active ? "#fff" : "var(--muted)",
-                  background: active ? "var(--secondary)" : "var(--surface)",
-                  border: `1px solid ${active ? "var(--secondary)" : "var(--line)"}`,
+                  background: active ? "linear-gradient(135deg,var(--secondary),var(--primary))" : "var(--surface)",
+                  border: `1px solid ${active ? "transparent" : "var(--line)"}`,
+                  boxShadow: active ? "0 10px 22px -10px rgb(var(--primary-rgb) / .5)" : "none",
                 }}
               >
                 {cat === "All" ? "Tout" : cat}
@@ -219,7 +236,7 @@ export default function ProductsPage() {
       )}
 
       {/* Grid */}
-      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill,minmax(258px,1fr))", gap: 18 }}>
+      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill,minmax(258px,1fr))", gap: 20 }}>
         {filtered.map((item, i) => (
           <ProductCard key={item._id} item={item} index={i} onClick={() => navigate(`/products/${item._id}`)} />
         ))}
